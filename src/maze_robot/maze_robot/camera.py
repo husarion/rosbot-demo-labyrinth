@@ -20,7 +20,6 @@ import os
 
 from threading import Thread
 
-
 # TODO Parameters for map scaling
 
 def empty_callback():
@@ -50,8 +49,8 @@ class CameraNode(Node):
         self.lower_hsv = np.array(self.get_parameter('lower_hsv').value)
         self.upper_hsv = np.array(self.get_parameter('upper_hsv').value)
 
-        self.map_sub_ = self.create_subscription(
-            Image, self.camera_topic_, self.map_sub_callback, 10)
+        # self.map_sub_ = self.create_subscription(
+        #     Image, self.camera_topic_, self.map_sub_callback, 10)
         self.update_map_server_ = self.create_service(
             UpdateMap, 'update_map', self.update_map_server)
 
@@ -61,23 +60,20 @@ class CameraNode(Node):
 
     # update map server
     def update_map_server(self, request, response):
-        try:
-            self.convert_map(self.cv_map_image_)
-            self.call_load_map(self.map_yaml_url_)
-            response.success = True
-        except:
-            response.success = False
-            self.get_logger().error("Failed to update map")
         # try:
-        #     self.call_get_image()
-        #     time.sleep(0.5)
-
-        #     #self.convert_map(self.cv_map_image_)
-        #     #self.call_load_map(self.map_yaml_url_)
+        #     self.convert_map(self.cv_map_image_)
+        #     self.call_load_map(self.map_yaml_url_)
         #     response.success = True
         # except:
         #     response.success = False
         #     self.get_logger().error("Failed to update map")
+        try:
+            self.call_get_image()
+            time.sleep(0.5)
+            response.success = True
+        except:
+            response.success = False
+            self.get_logger().error("Failed to update map")
 
         #self.call_get_image()
         #self.convert_map(self.cv_map_image_)

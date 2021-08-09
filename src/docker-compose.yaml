@@ -6,6 +6,7 @@ services:
     build:
         context: ./
         dockerfile: ./Dockerfile
+        # maze_robot_docker
     tty: true
     privileged: false
     command: ros2 launch maze_bringup navigation_maze.launch.py

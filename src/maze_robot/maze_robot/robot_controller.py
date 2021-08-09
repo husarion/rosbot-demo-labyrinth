@@ -1,18 +1,8 @@
 #!/usr/bin/env python3
 import rclpy
-#from rclpy.action import ActionClient
 from rclpy.node import Node
-#import math
 from functools import partial
-#from nav2_msgs.action import FollowWaypoints
-#from nav2_msgs.action import ComputePathToPose
-#from nav2_msgs.action import NavigateToPose
-#from nav2_msgs.action import FollowPath
-
-#from geometry_msgs.msg import Twist
-#from geometry_msgs.msg import Pose
 from geometry_msgs.msg import PoseStamped
-#from nav_msgs.msg import Odometry
 from custom_interfaces.srv import Start
 from custom_interfaces.srv import UpdateMap
 
@@ -38,7 +28,7 @@ class RobotControllerNode(Node):
         self.goal_pose_pub_ = self.create_publisher(PoseStamped, 'goal_pose', 10)
         self.get_logger().info("Robot controller node has been started")
 
-        #self.call_update_map()
+        self.call_update_map()
 
     # Start server
     def callback_start_server(self, request, response):
