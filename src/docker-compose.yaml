@@ -6,8 +6,8 @@ services:
     build:
         context: ./
         dockerfile: ./Dockerfile
-        # maze_robot_docker
     tty: true
+    restart: on-failure
     network_mode: host
     privileged: false
     command: ros2 launch maze_bringup navigation_maze.launch.py
@@ -42,19 +42,19 @@ services:
     #network_mode: host
     command: ros2 run ros1_bridge dynamic_bridge
 
-#   rviz2:
-#     image: husarion/rviz2-rosbot:vnc
-#     restart: on-failure
-#     ports:
-#       - "5900:5900"
-#       - "6080:6080"
+  rviz2:
+    image: husarion/rviz2-rosbot:vnc
+    restart: on-failure
+    ports:
+      - "5900:5900"
+      - "6080:6080"
 
-  # rplidar:
-  #   image: husarion/rplidar:latest
-  #   restart: unless-stopped
-  #   environment:
-  #       - "ROS_MASTER_URI=http://my-ros-master:11311"
-  #   devices:
-  #     - /dev/ttyUSB0
-  #   tty: true      
-  #   command: roslaunch rplidar_ros rplidar_a3.launch # For Rosbot 2.0 PRO use roslaunch rplidar_ros rplidar_a3.launch
+  rplidar:
+    image: husarion/rplidar:latest
+    restart: unless-stopped
+    environment:
+        - "ROS_MASTER_URI=http://my-ros-master:11311"
+    devices:
+      - /dev/ttyUSB0
+    tty: true      
+    command: roslaunch rplidar_ros rplidar_a3.launch # For Rosbot 2.0 PRO use roslaunch rplidar_ros rplidar_a3.launch

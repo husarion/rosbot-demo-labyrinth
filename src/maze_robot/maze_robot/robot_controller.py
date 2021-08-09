@@ -28,7 +28,7 @@ class RobotControllerNode(Node):
         self.goal_pose_pub_ = self.create_publisher(PoseStamped, 'goal_pose', 10)
         self.get_logger().info("Robot controller node has been started")
 
-        self.call_update_map()
+        #self.call_update_map()
 
     # Start server
     def callback_start_server(self, request, response):
