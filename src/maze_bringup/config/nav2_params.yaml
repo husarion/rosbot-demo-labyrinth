@@ -183,34 +183,40 @@ planner_server:
     planner_plugins: ["GridBased"]
     GridBased:
       plugin: "smac_planner/SmacPlanner2D"
-      smooth_path: false
+      smooth_path: true
       tolerance: 0.5                      # tolerance for planning if unable to reach exact pose, in meters, for 2D node
-      downsample_costmap: false           # whether or not to downsample the map
-      downsampling_factor: 1              # multiplier for the resolution of the costmap layer (e.g. 2 on a 5cm costmap would be 10cm)
+      downsample_costmap: true #false           # whether or not to downsample the map
+      downsampling_factor: 2              # multiplier for the resolution of the costmap layer (e.g. 2 on a 5cm costmap would be 10cm)
       allow_unknown: false                # allow traveling in unknown space
       max_iterations: -1             # maximum total iterations to search for before failing (in case unreachable), set to -1 to disable
       max_on_approach_iterations: 1000    # maximum number of iterations to attempt to reach goal once in tolerance, 2D only
       max_planning_time: 50000.0
-      max_planning_time_ms: 100000.0           # max time in s for planner to plan, smooth, and upsample. Will scale maximum smoothing and upsampling times based on remaining time after planning.
+      max_planning_time_ms: 10000.0           # max time in s for planner to plan, smooth, and upsample. Will scale maximum smoothing and upsampling times based on remaining time after planning.
       motion_model_for_search: "VON_NEUMANN"    # valid options are MOORE, VON_NEUMANN, DUBIN, REEDS_SHEPP. 2D Moore, Von Neumann; Hybrid Dubin, Redds-Shepp; State Lattice set internally
       minimum_turning_radius: 0.4        # For Hybrid nodes: minimum turning radius in m of path / vehicle
 
       smoother:
-        max_iterations: 1000000
-        max_time: 100000.0
-        # w_smooth: 0.3
-        # w_data: 0.2
-        # tolerance: 1e-10
-        # w_curve: 30.0                 # weight to minimize curvature of path
-        # w_dist: 0.0                   # weight to bind path to original as optional replacement for cost weight
-        # w_smooth: 30000.0             # weight to maximize smoothness of path
-        # w_cost: 0.025                 # weight to steer robot away from collision and cost
-        # cost_scaling_factor: 10.0
-        max_curvature: 5.0
-        curvature_weight: 10.0
-        distance_weight: 10.0
-        smooth_weight: 00.0
-        costmap_weight: 0.025
+        smoother:
+          w_curve: 30.0                 # weight to minimize curvature of path
+          w_dist: 0.0                   # weight to bind path to original as optional replacement for cost weight
+          w_smooth: 30000.0 #30000.0             # weight to maximize smoothness of path
+          w_cost: 0.025 #0.025                 # weight to steer robot away from collision and cost
+          cost_scaling_factor: 10.0 #10.0     # this should match the inflation layer's parameter
+
+        # I do not recommend users mess with this unless they're doing production tuning
+        optimizer:
+          max_time: 0.1 #0.10                # maximum compute time for smoother
+          max_iterations: 500           # max iterations of smoother
+          debug_optimizer: false        # print debug info
+          gradient_tol: 1.0e-10
+          fn_tol: 1.0e-20
+          param_tol: 1.0e-15
+          advanced:
+            min_line_search_step_size: 1.0e-20
+            max_num_line_search_step_size_iterations: 50
+            line_search_sufficient_function_decrease: 1.0e-20
+            max_num_line_search_direction_restarts: 10
+            max_line_search_step_expansion: 50
 
 planner_server_rclcpp_node:
   ros__parameters:
