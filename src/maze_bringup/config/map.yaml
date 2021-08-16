@@ -1,5 +1,5 @@
 image: maze_cam.png
-resolution: 0.03
+resolution: 0.041 #0.03
 origin: [-1.6, -0.95, 0.0]
 negate: 0
 occupied_thresh: 0.65

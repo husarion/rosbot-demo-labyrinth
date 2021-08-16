@@ -13,7 +13,6 @@ import time
 
 #TODO start response after reaching goal
 
-
 class RobotControllerNode(Node):
     def __init__(self):
         super().__init__("robot_controller")
@@ -44,8 +43,6 @@ class RobotControllerNode(Node):
         goal.pose.position.x = self.goal_x
         goal.pose.position.y = self.goal_y
         self.goal_pose_pub_.publish(goal)
-
-        #self.send_goal_navigate(self.goal_x, self.goal_y)  
 
         response.success = True
         return response

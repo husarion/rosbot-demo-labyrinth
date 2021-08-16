@@ -74,11 +74,6 @@ class CameraNode(Node):
         except:
             response.success = False
             self.get_logger().error("Failed to update map")
-
-        #self.call_get_image()
-        #self.convert_map(self.cv_map_image_)
-        #self.call_load_map(self.map_yaml_url_)
-        #response.success = True
     
         return response
 
@@ -145,7 +140,6 @@ class CameraNode(Node):
         try:
             response = future.result()
             img = response.image
-            #self.get_logger().info(str(img.width))
             self.cv_map_image_ = self.bridge.imgmsg_to_cv2(img, "bgr8")
             try:
                 self.cv_map_image_ = self.bridge.imgmsg_to_cv2(img, "bgr8")

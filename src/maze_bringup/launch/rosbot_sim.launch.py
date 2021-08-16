@@ -13,6 +13,7 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     world_file_name =  'maze_sim.world'
+    #world_file_name =  'simple_maze.world'
 
     use_sim_time = launch.substitutions.LaunchConfiguration('use_sim_time', default='true')
 
@@ -25,6 +26,7 @@ def generate_launch_description():
 
     gazebo_ros = get_package_share_directory('gazebo_ros')
     maze_bringup = get_package_share_directory('maze_bringup')
+    rosbot_description = get_package_share_directory('rosbot_description')
 
     gazebo_client = launch.actions.IncludeLaunchDescription(
     launch.launch_description_sources.PythonLaunchDescriptionSource(

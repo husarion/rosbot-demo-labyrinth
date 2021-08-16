@@ -2,10 +2,10 @@ camera:
   ros__parameters:
     camera_topic: image_raw
     lower_hsv:
-    - 11
-    - 32
+    - 41
     - 0
+    - 176
     upper_hsv:
-    - 33
+    - 125
     - 255
     - 255

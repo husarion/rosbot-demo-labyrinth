@@ -108,7 +108,6 @@ def generate_launch_description():
             executable='map_server',
             name='map_server',
             output='screen',
-            #parameters=[configured_params],
             parameters=[
                 {'yaml_filename': os.path.join(maze_bringup, "config/map_sim.yaml")},
                 {'topic_name': "map"},

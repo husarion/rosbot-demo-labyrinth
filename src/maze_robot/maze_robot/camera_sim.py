@@ -69,11 +69,6 @@ class CameraNode(Node):
         except:
             response.success = False
             self.get_logger().error("Failed to update map")
-
-        #self.call_get_image()
-        #self.convert_map(self.cv_map_image_)
-        #self.call_load_map(self.map_yaml_url_)
-        #response.success = True
     
         return response
 
