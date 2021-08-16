@@ -10,6 +10,8 @@ RUN apt install -y \
     #ros-foxy-slam-toolbox \
     ros-foxy-navigation2 \
     ros-foxy-gazebo-ros-pkgs
+    
+RUN apt install ros-foxy-rviz2
 
 RUN apt upgrade -y 
 
