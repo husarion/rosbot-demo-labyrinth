@@ -9,9 +9,12 @@ class GetImageNode : public rclcpp::Node
 {
 public:
     GetImageNode() : Node("get_image_server")
-    {
+    {   
+        this->declare_parameter("camera_topic", "image_raw");
+        std::string camera_topic_ = this->get_parameter("camera_topic").as_string();
+
         image_subscriber_ = this->create_subscription<sensor_msgs::msg::Image>(
-            "image_raw", 10, std::bind(&GetImageNode::callbackImageSub, this, _1)
+            camera_topic_, 10, std::bind(&GetImageNode::callbackImageSub, this, _1)
         );
         get_image_server_ = this->create_service<custom_interfaces::srv::GetImage>(
             "get_image",

@@ -20,6 +20,7 @@ def generate_launch_description():
             package='maze_cam',
             executable='get_image',
             name='get_image',
+            parameters=[{'camera_topic': 'image_raw'}]
         ),
 
 ])
