@@ -1,0 +1,18 @@
+version: "2.3"
+services:
+
+  # ROS foxy - maze navigation
+  maze_navigation:
+    build:
+        context: ../
+        dockerfile: ./Dockerfile
+    tty: true
+    environment: 
+      - "ROS_DOMAIN_ID=10"
+      - "DISPLAY=$DISPLAY"
+      - "GAZEBO_RESOURCE_PATH=/usr/share/gazebo-11"
+    volumes: 
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    privileged: true
+    network_mode: host
+    command: ros2 launch maze_bringup navigation_maze_sim.launch.py
