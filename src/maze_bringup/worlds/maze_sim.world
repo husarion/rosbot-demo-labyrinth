@@ -90,10 +90,10 @@
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
     <state world_name='default'>
-      <sim_time>1790 805000000</sim_time>
-      <real_time>47 317354300</real_time>
-      <wall_time>1628075034 778669614</wall_time>
-      <iterations>42301</iterations>
+      <sim_time>1816 926000000</sim_time>
+      <real_time>34 338438998</real_time>
+      <wall_time>1629286176 177916103</wall_time>
+      <iterations>26121</iterations>
       <model name='camera_map'>
         <pose>5 4 12 0 1.57 1.57</pose>
         <scale>1 1 1</scale>
@@ -105,10 +105,10 @@
         </link>
       </model>
       <model name='circle'>
-        <pose>10.3 8.5 0.000494 0 -0 0</pose>
+        <pose>10.3 8.5 0.000502 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='circle::link'>
-          <pose>10.3654 8.37511 0.000491 0 -0 0</pose>
+          <pose>10.3654 8.37511 0.000499 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 -9.8 0 -0 0</acceleration>
           <wrench>0 0 -9.8 0 -0 0</wrench>
@@ -561,78 +561,78 @@
         </link>
       </model>
       <model name='rosbot'>
-        <pose>0.001124 -0.005204 0.019985 4e-05 5.3e-05 0.00427</pose>
+        <pose>0.001367 -0.006317 0.019985 4e-05 5.3e-05 0.005183</pose>
         <scale>1 1 1</scale>
         <link name='base_link'>
-          <pose>0.001124 -0.005204 0.019985 4e-05 5.3e-05 0.00427</pose>
+          <pose>0.001367 -0.006317 0.019985 4e-05 5.3e-05 0.005183</pose>
           <velocity>1e-05 -4.3e-05 0.004831 -9e-06 -1e-05 3.5e-05</velocity>
-          <acceleration>0.000202 -0.001145 9.66115 -0.018649 -0.019763 3.6e-05</acceleration>
-          <wrench>0.000404 -0.00229 19.3223 0 -0 0</wrench>
+          <acceleration>0.000203 -0.001145 9.66114 -0.018639 -0.019769 3.7e-05</acceleration>
+          <wrench>0.000406 -0.00229 19.3223 0 -0 0</wrench>
         </link>
         <link name='camera_link'>
-          <pose>-0.028867 -0.005338 0.189986 4e-05 5.3e-05 0.00427</pose>
+          <pose>-0.028624 -0.00648 0.189986 4e-05 5.3e-05 0.005183</pose>
           <velocity>1.2e-05 -4.7e-05 0.004761 1.8e-05 1.8e-05 3.5e-05</velocity>
-          <acceleration>0.006052 -0.007387 9.52296 0.035637 0.035424 -6.1e-05</acceleration>
+          <acceleration>0.006062 -0.007385 9.52294 0.035612 0.035442 -6.1e-05</acceleration>
           <wrench>1e-06 -1e-06 0.000952 0 -0 0</wrench>
         </link>
         <link name='front_left_wheel'>
-          <pose>0.053654 0.105021 0.040003 3.14155 -0.180955 -3.13732</pose>
+          <pose>0.053797 0.103955 0.040003 3.14155 -0.180813 -3.1364</pose>
           <velocity>-1e-06 1e-06 0.008164 -3.4e-05 -2.1e-05 3.6e-05</velocity>
-          <acceleration>-0.012332 0.084313 16.3274 -0.073787 -0.046576 -0.004661</acceleration>
-          <wrench>-0.000123 0.000843 0.163274 0 -0 0</wrench>
+          <acceleration>-0.01241 0.084303 16.3282 -0.073558 -0.04658 -0.00468</acceleration>
+          <wrench>-0.000124 0.000843 0.163282 0 -0 0</wrench>
         </link>
         <link name='front_right_wheel'>
-          <pose>0.054594 -0.114977 0.040002 3.14154 0.617866 -3.13735</pose>
-          <velocity>4e-06 -2e-05 0.009762 0.000512 9.6e-05 1.3e-05</velocity>
-          <acceleration>-0.018469 0.040597 19.5247 1.1388 0.221527 0.055431</acceleration>
-          <wrench>-0.000185 0.000406 0.195247 0 -0 0</wrench>
+          <pose>0.054937 -0.116042 0.040002 3.14154 0.616509 -3.13644</pose>
+          <velocity>4e-06 -2e-05 0.009763 0.000511 9.7e-05 1.3e-05</velocity>
+          <acceleration>-0.018479 0.040622 19.526 1.13783 0.222758 0.054961</acceleration>
+          <wrench>-0.000185 0.000406 0.19526 0 -0 0</wrench>
         </link>
         <link name='laser_link'>
-          <pose>0.001127 -0.005206 0.084984 4e-05 5.3e-05 0.00427</pose>
+          <pose>0.00137 -0.00632 0.084984 4e-05 5.3e-05 0.005183</pose>
           <velocity>1e-05 -4.4e-05 0.004761 1.4e-05 1.4e-05 3.5e-05</velocity>
-          <acceleration>0.001473 -0.00278 9.52174 0.02812 0.02802 -4.8e-05</acceleration>
+          <acceleration>0.001476 -0.00278 9.52172 0.0281 0.028034 -4.8e-05</acceleration>
           <wrench>0 -0 0.000952 0 -0 0</wrench>
         </link>
         <link name='range_fl'>
-          <pose>0.095888 0.050202 0.019982 4e-05 5.3e-05 0.00427</pose>
+          <pose>0.09608 0.049174 0.019982 4e-05 5.3e-05 0.005183</pose>
           <velocity>7e-06 -4e-05 0.00476 1e-05 1e-05 3.5e-05</velocity>
-          <acceleration>-0.000514 -0.000793 9.5207 0.020312 0.020205 -3.5e-05</acceleration>
+          <acceleration>-0.000514 -0.000793 9.52068 0.020297 0.020215 -3.5e-05</acceleration>
           <wrench>-0 -0 0.000952 0 -0 0</wrench>
         </link>
         <link name='range_fr'>
-          <pose>0.096358 -0.059797 0.019977 4e-05 5.3e-05 0.00427</pose>
+          <pose>0.09665 -0.060824 0.019977 4e-05 5.3e-05 0.005183</pose>
           <velocity>1.1e-05 -4e-05 0.004759 6e-06 6e-06 3.5e-05</velocity>
-          <acceleration>-0.00028 -0.001029 9.51897 0.012213 0.011994 -2.1e-05</acceleration>
+          <acceleration>-0.000279 -0.001029 9.51895 0.012204 0.011999 -2e-05</acceleration>
           <wrench>-0 -0 0.000952 0 -0 0</wrench>
         </link>
         <link name='range_rl'>
-          <pose>-0.09411 0.04939 0.019992 -4e-05 -5.3e-05 -3.13741</pose>
-          <velocity>7e-06 -4.7e-05 0.004761 -2e-06 -3e-06 3.5e-05</velocity>
-          <acceleration>0.00023 -0.001525 9.52204 -0.004793 -0.005385 1e-05</acceleration>
+          <pose>-0.093917 0.048189 0.019992 -4e-05 -5.3e-05 -3.1365</pose>
+          <velocity>8e-06 -4.7e-05 0.004761 -2e-06 -3e-06 3.5e-05</velocity>
+          <acceleration>0.000232 -0.001525 9.52202 -0.004787 -0.005388 1.1e-05</acceleration>
           <wrench>0 -0 0.000952 0 -0 0</wrench>
         </link>
         <link name='range_rr'>
-          <pose>-0.093641 -0.060609 0.019987 3.14155 4e-05 -3.13733</pose>
+          <pose>-0.093347 -0.061809 0.019987 3.14155 4e-05 -3.13641</pose>
           <velocity>1.1e-05 -4.7e-05 0.004761 2e-06 2e-06 3.5e-05</velocity>
-          <acceleration>-2.9e-05 -0.00127 9.52216 0.003832 0.003457 -6e-06</acceleration>
+          <acceleration>-2.8e-05 -0.00127 9.52214 0.00383 0.003457 -5e-06</acceleration>
           <wrench>-0 -0 0.000952 0 -0 0</wrench>
         </link>
         <link name='rear_left_wheel'>
-          <pose>-0.052345 0.104569 0.040001 0.000139 1.27108 0.004403</pose>
-          <velocity>5e-06 -1.2e-05 0.006597 0.000274 0.000107 6.3e-05</velocity>
-          <acceleration>-0.000499 0.065306 13.1938 0.53622 0.103125 0.181438</acceleration>
-          <wrench>-5e-06 0.000653 0.131938 0 -0 0</wrench>
+          <pose>-0.052202 0.103406 0.040001 0.00014 1.27259 0.005317</pose>
+          <velocity>5e-06 -1.2e-05 0.006596 0.000274 0.000107 6.3e-05</velocity>
+          <acceleration>-0.000553 0.065309 13.1926 0.536363 0.103771 0.181689</acceleration>
+          <wrench>-6e-06 0.000653 0.131926 0 -0 0</wrench>
         </link>
         <link name='rear_right_wheel'>
-          <pose>-0.051405 -0.11543 0.040002 8.2e-05 -1.02245 0.0042</pose>
-          <velocity>9e-06 -2.5e-05 0.008628 0.000612 0.000185 6.8e-05</velocity>
-          <acceleration>-0.009165 0.038941 17.2565 1.39291 0.325499 0.207836</acceleration>
-          <wrench>-9.2e-05 0.000389 0.172565 0 -0 0</wrench>
+          <pose>-0.051061 -0.116591 0.040002 8.2e-05 -1.01994 0.005114</pose>
+          <velocity>9e-06 -2.5e-05 0.008629 0.000612 0.000186 6.8e-05</velocity>
+          <acceleration>-0.009228 0.038918 17.2574 1.39324 0.325977 0.206839</acceleration>
+          <wrench>-9.2e-05 0.000389 0.172574 0 -0 0</wrench>
         </link>
         <link name='top_cover'>
-          <pose>0.001128 -0.005206 0.094985 4e-05 5.3e-05 0.00427</pose>
+          <pose>0.001371 -0.00632 0.094985 4e-05 5.3e-05 0.005183</pose>
           <velocity>9e-06 -4.3e-05 0.004851 -1.1e-05 -1.2e-05 3.5e-05</velocity>
-          <acceleration>-0.000578 -0.000303 9.70296 -0.022874 -0.024251 4.4e-05</acceleration>
+          <acceleration>-0.000578 -0.000304 9.70295 -0.022853 -0.024263 4.5e-05</acceleration>
           <wrench>-0 -0 0.00097 0 -0 0</wrench>
         </link>
       </model>
@@ -692,7 +692,7 @@
           <pose>0 0 0 1.5707 0 1.5707</pose>
           <geometry>
             <mesh>
-              <uri>/home/dawid/rosbot_ws/install/rosbot_description/share/rosbot_description/worlds/box.dae</uri>
+              <uri>box.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -748,7 +748,7 @@
           <pose>0 0 0 1.5707 0 1.5707</pose>
           <geometry>
             <mesh>
-              <uri>/home/dawid/rosbot_ws/install/rosbot_description/share/rosbot_description/worlds/upper.dae</uri>
+              <uri>upper.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -815,7 +815,7 @@
           <pose>0 0 0 0 -0 1.5707</pose>
           <geometry>
             <mesh>
-              <uri>/home/dawid/rosbot_ws/install/rosbot_description/share/rosbot_description/worlds/wheel.dae</uri>
+              <uri>wheel.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -897,7 +897,7 @@
           <pose>0 0 0 0 0 -1.5707</pose>
           <geometry>
             <mesh>
-              <uri>/home/dawid/rosbot_ws/install/rosbot_description/share/rosbot_description/worlds/wheel.dae</uri>
+              <uri>wheel.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -979,7 +979,7 @@
           <pose>0 0 0 0 -0 1.5707</pose>
           <geometry>
             <mesh>
-              <uri>/home/dawid/rosbot_ws/install/rosbot_description/share/rosbot_description/worlds/wheel.dae</uri>
+              <uri>wheel.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -1061,7 +1061,7 @@
           <pose>0 0 0 0 0 -1.5707</pose>
           <geometry>
             <mesh>
-              <uri>/home/dawid/rosbot_ws/install/rosbot_description/share/rosbot_description/worlds/wheel.dae</uri>
+              <uri>wheel.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -1187,7 +1187,7 @@
           <pose>0 0 0 1.5707 0 1.5707</pose>
           <geometry>
             <mesh>
-              <uri>/home/dawid/rosbot_ws/install/rosbot_description/share/rosbot_description/worlds/astra.dae</uri>
+              <uri>astra.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -1274,7 +1274,7 @@
           <pose>0 0 0 1.5707 0 1.5707</pose>
           <geometry>
             <mesh>
-              <uri>/home/dawid/rosbot_ws/install/rosbot_description/share/rosbot_description/worlds/rplidar.dae</uri>
+              <uri>rplidar.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>

@@ -468,7 +468,7 @@
           <pose>0 0 0 1.5707 0 1.5707</pose>
           <geometry>
             <mesh>
-              <uri>/home/dawid/rosbot_ws/install/rosbot_description/share/rosbot_description/worlds/box.dae</uri>
+              <uri>box.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -524,7 +524,7 @@
           <pose>0 0 0 1.5707 0 1.5707</pose>
           <geometry>
             <mesh>
-              <uri>/home/dawid/rosbot_ws/install/rosbot_description/share/rosbot_description/worlds/upper.dae</uri>
+              <uri>upper.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -591,7 +591,7 @@
           <pose>0 0 0 0 -0 1.5707</pose>
           <geometry>
             <mesh>
-              <uri>/home/dawid/rosbot_ws/install/rosbot_description/share/rosbot_description/worlds/wheel.dae</uri>
+              <uri>wheel.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -673,7 +673,7 @@
           <pose>0 0 0 0 0 -1.5707</pose>
           <geometry>
             <mesh>
-              <uri>/home/dawid/rosbot_ws/install/rosbot_description/share/rosbot_description/worlds/wheel.dae</uri>
+              <uri>wheel.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -755,7 +755,7 @@
           <pose>0 0 0 0 -0 1.5707</pose>
           <geometry>
             <mesh>
-              <uri>/home/dawid/rosbot_ws/install/rosbot_description/share/rosbot_description/worlds/wheel.dae</uri>
+              <uri>wheel.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -837,7 +837,7 @@
           <pose>0 0 0 0 0 -1.5707</pose>
           <geometry>
             <mesh>
-              <uri>/home/dawid/rosbot_ws/install/rosbot_description/share/rosbot_description/worlds/wheel.dae</uri>
+              <uri>wheel.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -963,7 +963,7 @@
           <pose>0 0 0 1.5707 0 1.5707</pose>
           <geometry>
             <mesh>
-              <uri>/home/dawid/rosbot_ws/install/rosbot_description/share/rosbot_description/worlds/astra.dae</uri>
+              <uri>astra.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -1050,7 +1050,7 @@
           <pose>0 0 0 1.5707 0 1.5707</pose>
           <geometry>
             <mesh>
-              <uri>/home/dawid/rosbot_ws/install/rosbot_description/share/rosbot_description/worlds/rplidar.dae</uri>
+              <uri>rplidar.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
