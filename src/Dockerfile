@@ -15,6 +15,9 @@ RUN apt install ros-foxy-rviz2
 
 RUN apt upgrade -y 
 
+RUN apt install -y ros-foxy-rmw-cyclonedds-cpp
+RUN sudo rm -rf /var/lib/apt/lists/*
+
 RUN mkdir -p /ros2_ws/src && \ 
     cd /ros2_ws && \
     colcon build --symlink-install --merge-install
