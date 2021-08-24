@@ -18,7 +18,9 @@ import numpy as np
 import time
 import os
 
-from threading import Thread
+from threading import Event
+from rclpy.callback_groups import ReentrantCallbackGroup
+from rclpy.executors import MultiThreadedExecutor
 
 # TODO Parameters for map scaling
 
@@ -29,17 +31,16 @@ class CameraNode(Node):
     def __init__(self):
         super().__init__("camera")
 
+        self.future_done_event = Event()
+        self.callback_group = ReentrantCallbackGroup()
+
         self.cv_map_image_ = None
-        self.image_loaded_ = False
         self.goal_x = 0
         self.goal_y = 0
         self.bridge = CvBridge()
 
         self.save_map_url_ = os.path.join(get_package_share_directory('maze_bringup'), 'config/maze_cam.png')
         self.map_yaml_url_ = os.path.join(get_package_share_directory('maze_bringup'), 'config/map.yaml')
-
-        self.height_ = 0
-        self.width_ = 0
 
         self.declare_parameter('camera_topic','image_raw')
         self.declare_parameter('lower_hsv',[80, 0, 173])
@@ -49,24 +50,13 @@ class CameraNode(Node):
         self.lower_hsv = np.array(self.get_parameter('lower_hsv').value)
         self.upper_hsv = np.array(self.get_parameter('upper_hsv').value)
 
-        # self.map_sub_ = self.create_subscription(
-        #     Image, self.camera_topic_, self.map_sub_callback, 10)
         self.update_map_server_ = self.create_service(
-            UpdateMap, 'update_map', self.update_map_server)
+            UpdateMap, 'update_map', self.update_map_server,callback_group=self.callback_group)
 
         self.get_logger().info("Camera node has been started")
 
-        #self.call_get_image()
-
     # update map server
     def update_map_server(self, request, response):
-        # try:
-        #     self.convert_map(self.cv_map_image_)
-        #     self.call_load_map(self.map_yaml_url_)
-        #     response.success = True
-        # except:
-        #     response.success = False
-        #     self.get_logger().error("Failed to update map")
         try:
             self.call_get_image()
             time.sleep(0.5)
@@ -86,16 +76,6 @@ class CameraNode(Node):
 
     def convert_map(self, img):
         hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-
-        # lower_goal = np.array([50, 0, 0])
-        # upper_goal = np.array([110, 255, 255])       
-
-        # goal_mask = cv2.inRange(hsv_img, lower_goal, upper_goal)
-        # goal = np.nonzero(goal_mask)
-        # # depends on camera resolution 
-        # self.goal_x = goal[1][0]/26.666
-        # self.goal_y = (len(goal_mask) - goal[0][0])/26.666
-        # #print(str(self.goal_y) + '   ' + str((self.goal_x)))
 
         mask = cv2.inRange(hsv_img, self.lower_hsv, self.upper_hsv)
         maze = cv2.bitwise_not(mask)
@@ -126,15 +106,20 @@ class CameraNode(Node):
 
     # get image client
     def call_get_image(self):
-        client = self.create_client(GetImage, "get_image")
+        client = self.create_client(GetImage, "get_image",callback_group=self.callback_group)
         while not client.wait_for_service(1.0):
             self.get_logger().warn("Waiting for get_image server...")
 
         request = GetImage.Request()
 
+        self.future_done_event.clear()
+
         future = client.call_async(request)
         future.add_done_callback(
             partial(self.callback_get_image))
+
+        self.future_done_event.wait()
+        
 
     def callback_get_image(self, future):
         try:
@@ -143,10 +128,10 @@ class CameraNode(Node):
             self.cv_map_image_ = self.bridge.imgmsg_to_cv2(img, "bgr8")
             try:
                 self.cv_map_image_ = self.bridge.imgmsg_to_cv2(img, "bgr8")
-                self.get_logger().info("Image from camera loaded")
+                self.get_logger().info("Image from camera loaded!")
                 self.convert_map(self.cv_map_image_)
                 self.call_load_map(self.map_yaml_url_)
-                self.image_loaded_ = True
+                self.future_done_event.set()
             except CvBridgeError as e:
                 print(e)
         except Exception as e:
@@ -156,7 +141,8 @@ class CameraNode(Node):
 def main(args=None):
     rclpy.init(args=args)
     node = CameraNode()
-    rclpy.spin(node)
+    executor = MultiThreadedExecutor()
+    rclpy.spin(node, executor)
     rclpy.shutdown()
 
 

@@ -18,8 +18,9 @@ import numpy as np
 import time
 import os
 
-from threading import Thread
-
+from threading import Event
+from rclpy.callback_groups import ReentrantCallbackGroup
+from rclpy.executors import MultiThreadedExecutor
 
 # TODO Parameters for map scaling
 
@@ -29,6 +30,9 @@ def empty_callback():
 class CameraNode(Node):
     def __init__(self):
         super().__init__("camera")
+
+        self.future_done_event = Event()
+        self.callback_group = ReentrantCallbackGroup()
 
         self.cv_map_image_ = None
         self.image_loaded_ = False
@@ -53,12 +57,10 @@ class CameraNode(Node):
         self.map_sub_ = self.create_subscription(
             Image, self.camera_topic_, self.map_sub_callback, 10)
         self.update_map_server_ = self.create_service(
-            UpdateMap, 'update_map', self.update_map_server)
+            UpdateMap, 'update_map', self.update_map_server,callback_group=self.callback_group)
 
         self.get_logger().info("Camera node has been started")
 
-        # self.convert_map(self.cv_map_image_)
-        # self.call_load_map(self.map_yaml_url_)
 
     # update map server
     def update_map_server(self, request, response):
@@ -82,16 +84,6 @@ class CameraNode(Node):
     def convert_map(self, img):
         hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-        # lower_goal = np.array([50, 0, 0])
-        # upper_goal = np.array([110, 255, 255])       
-
-        # goal_mask = cv2.inRange(hsv_img, lower_goal, upper_goal)
-        # goal = np.nonzero(goal_mask)
-        # # depends on camera resolution 
-        # self.goal_x = goal[1][0]/26.666
-        # self.goal_y = (len(goal_mask) - goal[0][0])/26.666
-        # #print(str(self.goal_y) + '   ' + str((self.goal_x)))
-
         mask = cv2.inRange(hsv_img, self.lower_hsv, self.upper_hsv)
         maze = cv2.bitwise_not(mask)
         # maze = cv2.rotate(maze, cv2.ROTATE_180) #use if image flipped
@@ -100,18 +92,24 @@ class CameraNode(Node):
 
     # load map client
     def call_load_map(self, map_url):
-        client = self.create_client(LoadMap, "map_server/load_map")
+        client = self.create_client(LoadMap, "map_server/load_map",callback_group=self.callback_group)
         while not client.wait_for_service(1.0):
             self.get_logger().warn("Waiting for map server...")
 
         request = LoadMap.Request()
         request.map_url = map_url
 
+        self.future_done_event.clear()
+
         future = client.call_async(request)
         future.add_done_callback(
             partial(self.callback_load_map, map_url=map_url))
 
+        self.future_done_event.wait()
+
+
     def callback_load_map(self, future, map_url):
+        self.future_done_event.set()
         try:
             response = future.result()
             if response.RESULT_SUCCESS == 1:
@@ -122,7 +120,8 @@ class CameraNode(Node):
 def main(args=None):
     rclpy.init(args=args)
     node = CameraNode()
-    rclpy.spin(node)
+    executor = MultiThreadedExecutor()
+    rclpy.spin(node, executor)
     rclpy.shutdown()
 
 
