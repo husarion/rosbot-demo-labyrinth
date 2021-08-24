@@ -8,11 +8,31 @@ services:
         dockerfile: ./Dockerfile
     tty: true
     environment: 
-      - "ROS_DOMAIN_ID=10"
-      - "DISPLAY=$DISPLAY"
-      - "GAZEBO_RESOURCE_PATH=/usr/share/gazebo-11"
+      - DISPLAY=$DISPLAY
+      - ROS_DOMAIN_ID=10
+      - GAZEBO_RESOURCE_PATH=/usr/share/gazebo-11
     volumes: 
       - /tmp/.X11-unix:/tmp/.X11-unix
-    privileged: true
-    network_mode: host
-    command: ros2 launch maze_bringup navigation_maze_sim.launch.py
+      - ./cyclonedds.xml:/cyclonedds.xml
+    network_mode: service:husarnet  # This will put the Husarnet Client in the same network namespace as your app (in this example: turtle_sim)
+    command: 
+      - bash
+      - -c
+      - |
+        export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+        export CYCLONEDDS_URI=file:///cyclonedds.xml
+        ros2 launch maze_bringup navigation_maze_sim.launch.py
+
+  husarnet:
+    image: husarnet/husarnet
+    restart: unless-stopped
+    volumes:
+      - /var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0  # Husarnet is using IPv6 for the internal connections
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    env_file: 
+      - ./.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there
