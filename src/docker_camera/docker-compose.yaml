@@ -1,0 +1,37 @@
+version: "2.3"
+services:
+
+  maze_camera:
+    build:
+      context: ../
+      dockerfile: ./maze_cam/Dockerfile
+    tty: true
+    environment: 
+      - "ROS_DOMAIN_ID=10"
+    devices: 
+      - /dev/video0
+    network_mode: service:husarnet
+    volumes: 
+      - ./cyclonedds.xml:/cyclonedds.xml
+    command: 
+      - bash
+      - -c
+      - |
+        export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+        export CYCLONEDDS_URI=file:///cyclonedds.xml
+        ros2 launch maze_cam maze_cam.launch.py
+
+  husarnet:
+    image: husarnet/husarnet
+    restart: unless-stopped
+    volumes:
+      - /var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0  # Husarnet is using IPv6 for the internal connections
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    env_file: 
+      - ./.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there
+
