@@ -2,5 +2,4 @@
 build
 log
 install
-/src/maze_cam/
 /src/maze_robot/maze/
