@@ -1,0 +1,78 @@
+version: "2.3"
+services:
+
+  rosbot:
+    image: husarion/rosbot
+    tty: true      
+    restart: on-failure
+    environment:
+      - "ROS_MASTER_URI=http://master_rosbot:11311"
+      - "ROS_IP=master_rosbot"
+      - "ROS_IPV6=on"
+      - "SERIAL_PORT=/dev/ttyS4" # default: ttyS1 - rosbot2.0; ttyS4 - rosbot2.0 pro
+    privileged: false
+    devices:
+      - "/dev/ttyS4"   # must match environment SERIAL_PORT 
+    network_mode: service:husarnet
+    command: roslaunch rosbot_description rosbot_docker.launch
+
+  # ROS Noetic
+  my-ros-master:
+    image: ros:noetic-ros-core
+    restart: on-failure
+    network_mode: service:husarnet
+    tty: true     
+    environment:
+      - "ROS_MASTER_URI=http://master_rosbot:11311"
+      - "ROS_IP=master_rosbot"
+      - "ROS_IPV6=on"
+    command: stdbuf -o L roscore
+
+  rplidar:
+    image: husarion/rplidar:latest
+    restart: unless-stopped
+    environment:
+      - "ROS_MASTER_URI=http://master_rosbot:11311"
+      - "ROS_IP=master_rosbot"
+      - "ROS_IPV6=on"
+    devices:
+      - /dev/ttyUSB0
+    tty: true      
+    network_mode: service:husarnet
+    command: roslaunch rplidar_ros rplidar_a3.launch # For Rosbot 2.0 PRO use roslaunch rplidar_ros rplidar_a3.launch
+
+
+  husarnet:
+    image: husarnet/husarnet
+    restart: unless-stopped
+    volumes:
+      - /var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0  # Husarnet is using IPv6 for the internal connections
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    env_file: 
+      - ./.env  # create .env file in the same folder as Dockerfile and specify HOSTNAME and JOINCODE there
+
+  bridge:
+    image: ros:galactic-ros1-bridge
+    restart: on-failure
+    tty: true
+    privileged: false
+    volumes: 
+      - ./cyclonedds.xml:/cyclonedds.xml
+    network_mode: service:husarnet
+    environment:
+      - "ROS_MASTER_URI=http://master_rosbot:11311"
+      - "ROS_IP=master_rosbot"
+      - "ROS_DOMAIN_ID=10"
+      - "ROS_IPV6=on"
+    command: 
+      - bash
+      - -c
+      - |
+        export CYCLONEDDS_URI=file:///cyclonedds.xml
+        ros2 run ros1_bridge dynamic_bridge
+
