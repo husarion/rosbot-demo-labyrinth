@@ -13,50 +13,21 @@ services:
     volumes: 
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./cyclonedds.xml:/cyclonedds.xml
+      - /etc/hosts:/etc/hosts
     network_mode: service:husarnet  # This will put the Husarnet Client in the same network namespace as your app (in this example: turtle_sim)
     command: 
       - bash
       - -c
       - |
-        export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
         export CYCLONEDDS_URI=file:///cyclonedds.xml
         ros2 launch maze_bringup navigation_maze.launch.py
-
-  # ROS Noetic + ROS 2 foxy
-#   bridge:
-#     image: ros:galactic-ros1-bridge
-#     restart: on-failure
-#     tty: true
-#     volumes: 
-#       - ./cyclonedds.xml:/cyclonedds.xml
-#     network_mode: service:husarnet
-#     environment:
-#       - "ROS_MASTER_URI=http://master:11311"
-#       - "ROS_IP=maze_nav2"
-#       - "ROS_DOMAIN_ID=10"
-#       - "ROS_IPV6=on"
-#     command: 
-#       - bash
-#       - -c
-#       - |
-#         export CYCLONEDDS_URI=file:///cyclonedds.xml
-#         ros2 run ros1_bridge dynamic_bridge
-# #     command: 
-#       - bash
-#       - -c
-#       - |
-#         apt update
-#         apt install -y ros-foxy-rmw-cyclonedds-cpp
-#         export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-#         export CYCLONEDDS_URI=file:///cyclonedds.xml
-#         ros2 run ros1_bridge dynamic_bridge
-
-
+        
   husarnet:
     image: husarnet/husarnet
     restart: unless-stopped
     volumes:
       - /var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
+      - /etc/hosts:/etc/hosts
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=0  # Husarnet is using IPv6 for the internal connections
     cap_add:

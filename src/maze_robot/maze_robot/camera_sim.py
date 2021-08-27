@@ -24,12 +24,18 @@ from rclpy.executors import MultiThreadedExecutor
 
 # TODO Parameters for map scaling
 
+
 def empty_callback():
     pass
+
 
 class CameraNode(Node):
     def __init__(self):
         super().__init__("camera")
+
+        qos_policy = rclpy.qos.QoSProfile(reliability=rclpy.qos.ReliabilityPolicy.BEST_EFFORT,
+                                          history=rclpy.qos.HistoryPolicy.KEEP_LAST,
+                                          depth=1)
 
         self.future_done_event = Event()
         self.callback_group = ReentrantCallbackGroup()
@@ -40,29 +46,31 @@ class CameraNode(Node):
         self.goal_y = 0
         self.bridge = CvBridge()
 
-        self.save_map_url_ = os.path.join(get_package_share_directory('maze_bringup'), 'config/maze_cam.png')
-        self.map_yaml_url_ = os.path.join(get_package_share_directory('maze_bringup'), 'config/map_sim.yaml')
+        self.save_map_url_ = os.path.join(
+            get_package_share_directory('maze_bringup'), 'config/maze_cam.png')
+        self.map_yaml_url_ = os.path.join(
+            get_package_share_directory('maze_bringup'), 'config/map_sim.yaml')
 
         self.height_ = 0
         self.width_ = 0
 
-        self.declare_parameter('camera_topic','camera_map/image_raw')
-        self.declare_parameter('lower_hsv',[80, 0, 173])
-        self.declare_parameter('upper_hsv',[179, 255, 255])
+        self.declare_parameter('camera_topic', 'camera_map/image_raw')
+        self.declare_parameter('lower_hsv', [80, 0, 173])
+        self.declare_parameter('upper_hsv', [179, 255, 255])
 
         self.camera_topic_ = self.get_parameter('camera_topic').value
         self.lower_hsv = np.array(self.get_parameter('lower_hsv').value)
         self.upper_hsv = np.array(self.get_parameter('upper_hsv').value)
 
         self.map_sub_ = self.create_subscription(
-            Image, self.camera_topic_, self.map_sub_callback, 10)
+            Image, self.camera_topic_, self.map_sub_callback, qos_profile=qos_policy)
         self.update_map_server_ = self.create_service(
-            UpdateMap, 'update_map', self.update_map_server,callback_group=self.callback_group)
+            UpdateMap, 'update_map', self.update_map_server, callback_group=self.callback_group)
 
         self.get_logger().info("Camera node has been started")
 
-
     # update map server
+
     def update_map_server(self, request, response):
         try:
             self.convert_map(self.cv_map_image_)
@@ -71,7 +79,7 @@ class CameraNode(Node):
         except:
             response.success = False
             self.get_logger().error("Failed to update map")
-    
+
         return response
 
     # camera image subscriber callback
@@ -92,7 +100,8 @@ class CameraNode(Node):
 
     # load map client
     def call_load_map(self, map_url):
-        client = self.create_client(LoadMap, "map_server/load_map",callback_group=self.callback_group)
+        client = self.create_client(
+            LoadMap, "map_server/load_map", callback_group=self.callback_group)
         while not client.wait_for_service(1.0):
             self.get_logger().warn("Waiting for map server...")
 
@@ -107,7 +116,6 @@ class CameraNode(Node):
 
         self.future_done_event.wait()
 
-
     def callback_load_map(self, future, map_url):
         self.future_done_event.set()
         try:
@@ -116,6 +124,7 @@ class CameraNode(Node):
                 self.get_logger().info("Map loaded successfully")
         except Exception as e:
             self.get_logger().error("Service call failed %r" % (e,))
+
 
 def main(args=None):
     rclpy.init(args=args)

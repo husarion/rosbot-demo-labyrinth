@@ -10,7 +10,7 @@
         </General>      
         <Discovery>
             <Peers>
-                <Peer address="maze_nav2"/>
+                <Peer address="maze-nav2"/>
             </Peers>
             <ParticipantIndex>auto</ParticipantIndex>
             <MaxAutoParticipantIndex>30</MaxAutoParticipantIndex>

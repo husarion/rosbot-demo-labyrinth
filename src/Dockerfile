@@ -1,43 +1,34 @@
-FROM ros:foxy-ros-base
+ARG ROS_DISTRO=galactic
+FROM ros:$ROS_DISTRO-ros-base
 
 SHELL ["/bin/bash", "-c"]
 
 RUN apt update && apt install -y \
     python3-pip \
-    python3-opencv 
+    python3-opencv \
+    python3-colcon-common-extensions
 
-RUN apt install -y \
-    #ros-foxy-slam-toolbox \
-    ros-foxy-navigation2 \
-    ros-foxy-gazebo-ros-pkgs
-    
-RUN apt install ros-foxy-rviz2
+RUN apt update && apt install -y \
+    ros-$ROS_DISTRO-navigation2 \
+    ros-$ROS_DISTRO-gazebo-ros-pkgs \
+    #ros-$ROS_DISTRO-rmw-cyclonedds-cpp \
+    ros-$ROS_DISTRO-rviz2
 
 RUN apt upgrade -y 
+#RUN sudo rm -rf /var/lib/apt/lists/*
 
-RUN apt install -y ros-foxy-rmw-cyclonedds-cpp
-RUN sudo rm -rf /var/lib/apt/lists/*
+RUN apt update && apt install -y \
+    ros-$ROS_DISTRO-nav2-bringup
 
-RUN mkdir -p /ros2_ws/src && \ 
-    cd /ros2_ws && \
-    colcon build --symlink-install --merge-install
-
-#RUN git clone --single-branch --branch foxy https://github.com/husarion/rosbot_description.git ros2_ws/src/rosbot_description
-
-RUN mkdir -p /ros2_ws/src/custom_interfaces
-RUN mkdir -p /ros2_ws/src/maze_bringup
-RUN mkdir -p /ros2_ws/src/maze_robot
+RUN mkdir -p /ros2_ws/src
 
 COPY ./custom_interfaces /ros2_ws/src/custom_interfaces
 COPY ./maze_bringup /ros2_ws/src/maze_bringup
 COPY ./maze_robot /ros2_ws/src/maze_robot
 
-RUN cd /ros2_ws && \
-    rosdep update && \
-    rosdep install --from-paths src --ignore-src -r -y
+WORKDIR /ros2_ws
 
-RUN cd /ros2_ws && \
-    source /opt/ros/foxy/setup.bash && \
+RUN source /opt/ros/$ROS_DISTRO/setup.bash && \
     colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --cmake-args -DBUILD_TESTING=OFF --merge-install
 
 COPY ./ros_entrypoint.sh /

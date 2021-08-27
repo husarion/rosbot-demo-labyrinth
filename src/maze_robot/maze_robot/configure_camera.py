@@ -23,6 +23,10 @@ class ConfigureCameraNode(Node):
     def __init__(self):
         super().__init__("configure_camera")
 
+        qos_policy = rclpy.qos.QoSProfile(reliability=rclpy.qos.ReliabilityPolicy.BEST_EFFORT,
+                                          history=rclpy.qos.HistoryPolicy.KEEP_LAST,
+                                          depth=1)
+
         self.params_url_ = os.path.join(get_package_share_directory(
             'maze_bringup'), 'config/camera_params.yaml')
 
@@ -43,7 +47,7 @@ class ConfigureCameraNode(Node):
         self.upper_hsv = np.array(self.get_parameter('upper_hsv').value)
 
         self.map_sub_ = self.create_subscription(
-            Image, self.camera_topic_, self.map_sub_callback, 10)
+            Image, self.camera_topic_, self.map_sub_callback, qos_profile=qos_policy)
         self.timer_ = self.create_timer(0.01, self.convert_map)
 
         self.get_logger().info(

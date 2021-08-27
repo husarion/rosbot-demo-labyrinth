@@ -11,10 +11,6 @@ def generate_launch_description():
     
     return LaunchDescription([
 
-        # IncludeLaunchDescription(
-        #     PythonLaunchDescriptionSource([maze_bringup, '/launch/rosbot.launch.py']),
-        # ),
-
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([maze_bringup, '/launch/rosbot_navigation.launch.py']),
         ),

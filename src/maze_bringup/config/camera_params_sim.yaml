@@ -4,7 +4,7 @@ camera:
     lower_hsv:
     - 83
     - 0
-    - 177
+    - 255
     upper_hsv:
     - 179
     - 255

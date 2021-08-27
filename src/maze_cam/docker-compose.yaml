@@ -11,4 +11,4 @@ services:
     devices: 
       - /dev/video0
     network_mode: host
-    command: ros2 launch maz_cam maze_cam.launch.py
+    command: ros2 launch maze_cam maze_cam.launch.py

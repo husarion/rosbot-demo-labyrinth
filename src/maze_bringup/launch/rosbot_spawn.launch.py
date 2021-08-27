@@ -11,7 +11,7 @@ def generate_launch_description():
             output='screen',
             arguments=['0', '0', '0', '-1.5707', '0', '-1.5707', 'camera_link', 'camera_depth_frame'],
             parameters=[
-        		maze_bringup + '/config/static_tf.yaml'
+        		maze_bringup + '/config/static_tf_sim.yaml'
         	],
             ),
 
@@ -63,7 +63,7 @@ def generate_launch_description():
             output='screen',
             arguments=['-0.03', '0', '0.18', '0', '0', '0', 'base_link', 'camera_link'],
             parameters=[
-        		maze_bringup + '/config/static_tf.yaml'
+        		maze_bringup + '/config/static_tf_sim.yaml'
             ]
             ),
         launch_ros.actions.Node(

@@ -47,6 +47,7 @@ class RobotControllerNode(Node):
 
             time.sleep(1.0)
             goal = PoseStamped()
+            goal.header.frame_id = 'map'
             goal.pose.position.x = self.goal_x
             goal.pose.position.y = self.goal_y
             self.goal_pose_pub_.publish(goal)

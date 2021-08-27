@@ -22,6 +22,7 @@ public:
         RCLCPP_INFO(this->get_logger(), "Service server has been started.");
     }
 
+
 private:
     void callbackGetImage(const custom_interfaces::srv::GetImage::Request::SharedPtr request,
                             const custom_interfaces::srv::GetImage::Response::SharedPtr response)

@@ -14,20 +14,28 @@ services:
     volumes: 
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./cyclonedds.xml:/cyclonedds.xml
+#      - /etc/hosts:/etc/hosts
     network_mode: service:husarnet  # This will put the Husarnet Client in the same network namespace as your app (in this example: turtle_sim)
+    # depends_on: 
+    #   - husarnet
     command: 
       - bash
       - -c
       - |
-        export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+        cat /etc/hosts
         export CYCLONEDDS_URI=file:///cyclonedds.xml
         ros2 launch maze_bringup navigation_maze_sim.launch.py
+
+
+#        export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+#        export CYCLONEDDS_URI=file:///cyclonedds.xml
 
   husarnet:
     image: husarnet/husarnet
     restart: unless-stopped
     volumes:
       - /var/lib/husarnet  # This will persist your Husarnet Client keys, thus IP of the container will be stable/the same between (re)boots
+      - /etc/hosts:/etc/hosts
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=0  # Husarnet is using IPv6 for the internal connections
     cap_add:

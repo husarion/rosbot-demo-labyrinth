@@ -10,11 +10,12 @@
         </General>      
         <Discovery>
             <Peers>
+                <Peer address="maze-nav2-sim"/>
                 <Peer address="laptop"/>
-                <Peer address="maze_nav2"/>
+                <!-- <Peer address="fc94:8b3c:5e40:cc22:8941:7bfa:5e5c:3952"/> -->
             </Peers>
             <ParticipantIndex>auto</ParticipantIndex>
-            <MaxAutoParticipantIndex>30</MaxAutoParticipantIndex>
+            <MaxAutoParticipantIndex>40</MaxAutoParticipantIndex>
         </Discovery>
         <Internal>
             <Watermarks>

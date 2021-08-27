@@ -12,9 +12,10 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(navigation2 REQUIRED)
 
 install(DIRECTORY
-    launch config worlds urdf
+    launch config worlds urdf models
     DESTINATION share/${PROJECT_NAME}  
 )
 

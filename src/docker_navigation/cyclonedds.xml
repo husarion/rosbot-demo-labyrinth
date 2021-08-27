@@ -11,9 +11,9 @@
         <Discovery>
             <Peers>
                 <Peer address="laptop"/>
-                <Peer address="maze_camera"/>
-                <Peer address="maze_nav2"/>
-                <Peer address="master_rosbot"/>
+                <Peer address="maze-camera"/>
+                <Peer address="maze-nav2"/>
+                <Peer address="master-rosbot"/>
             </Peers>
             <ParticipantIndex>auto</ParticipantIndex>
             <MaxAutoParticipantIndex>30</MaxAutoParticipantIndex>

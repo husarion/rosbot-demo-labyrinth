@@ -7,13 +7,11 @@ bt_navigator:
     enable_groot_monitoring: True
     groot_zmq_publisher_port: 1666
     groot_zmq_server_port: 1667
-    #server_timeout: 3000
     default_bt_xml_filename: "default_bt_xml_filename"
-    #default_bt_xml_filename: ./navigate_w_replanning_and_recovery.xml
     plugin_lib_names:
     - nav2_compute_path_to_pose_action_bt_node
-    #- nav2_compute_path_through_poses_action_bt_node
-    #- nav2_remove_passed_goals_action_bt_node
+    - nav2_remove_passed_goals_action_bt_node
+    - nav2_compute_path_through_poses_action_bt_node
     - nav2_follow_path_action_bt_node
     - nav2_back_up_action_bt_node
     - nav2_spin_action_bt_node
@@ -61,8 +59,8 @@ controller_server:
     # Goal checker parameters
     goal_checker:
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.25
-      yaw_goal_tolerance: 0.75
+      xy_goal_tolerance: 0.2 #0.25
+      yaw_goal_tolerance: 3.14 #0.75
       stateful: True
     FollowPath:
       plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
@@ -187,16 +185,16 @@ planner_server:
     use_sim_time: False
     planner_plugins: ["GridBased"]
     GridBased:
-      plugin: "smac_planner/SmacPlanner2D"
+      plugin: "nav2_smac_planner/SmacPlanner2D"
       smooth_path: false
       tolerance: 0.5                      # tolerance for planning if unable to reach exact pose, in meters, for 2D node
-      downsample_costmap: true #false           # whether or not to downsample the map
+      downsample_costmap: false #false           # whether or not to downsample the map
       downsampling_factor: 2              # multiplier for the resolution of the costmap layer (e.g. 2 on a 5cm costmap would be 10cm)
       allow_unknown: false                # allow traveling in unknown space
       max_iterations: -1             # maximum total iterations to search for before failing (in case unreachable), set to -1 to disable
       max_on_approach_iterations: 1000    # maximum number of iterations to attempt to reach goal once in tolerance, 2D only
-      max_planning_time: 50000.0
-      max_planning_time_ms: 10000.0           # max time in s for planner to plan, smooth, and upsample. Will scale maximum smoothing and upsampling times based on remaining time after planning.
+      max_planning_time: 10.0
+      #max_planning_time_ms: 10000.0           # max time in s for planner to plan, smooth, and upsample. Will scale maximum smoothing and upsampling times based on remaining time after planning.
       motion_model_for_search: "VON_NEUMANN"    # valid options are MOORE, VON_NEUMANN, DUBIN, REEDS_SHEPP. 2D Moore, Von Neumann; Hybrid Dubin, Redds-Shepp; State Lattice set internally
       minimum_turning_radius: 0.4        # For Hybrid nodes: minimum turning radius in m of path / vehicle
 

@@ -10,8 +10,8 @@
         </General>      
         <Discovery>
             <Peers>
-                <Peer address="maze_nav2"/>
-                <Peer address="maze_camera"/>
+                <Peer address="maze-nav2"/>
+                <Peer address="maze-camera"/>
             </Peers>
             <ParticipantIndex>auto</ParticipantIndex>
             <MaxAutoParticipantIndex>30</MaxAutoParticipantIndex>
