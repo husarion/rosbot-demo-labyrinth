@@ -14,21 +14,14 @@ services:
     volumes: 
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./cyclonedds.xml:/cyclonedds.xml
-#      - /etc/hosts:/etc/hosts
     network_mode: service:husarnet  # This will put the Husarnet Client in the same network namespace as your app (in this example: turtle_sim)
-    # depends_on: 
-    #   - husarnet
     command: 
       - bash
       - -c
       - |
         export CYCLONEDDS_URI=file:///cyclonedds.xml
-        ros2 run maze_robot camera
         ros2 launch maze_bringup navigation_maze_sim.launch.py
 
-
-#        export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-#        export CYCLONEDDS_URI=file:///cyclonedds.xml
 
   husarnet:
     image: husarnet/husarnet
