@@ -4,7 +4,7 @@ Create a folder for your workspace and copy the git repository.
 ```
 mkdir -p rosbot_ws/src
 cd rosbot_ws/src
-git clone https://github.com/husarion/rosbot-demo-labyrinth
+git clone --single-branch --branch galactic https://github.com/husarion/rosbot-demo-labyrinth.git
 ```
 ## Set up husarnet communication
 In this project, husarnet is used to communicate between a docker container and the host machine. Go to https://app.husarnet.com and create a free account or log in if you already have one. Then create a network using the “Create Network” button. Next click “Add element” and save the Join Code of your network. We will need it later.
@@ -35,7 +35,7 @@ Now you have to edit .env file located in `/rosbot-demo-labyrinth/src/docker_sim
 HOSTNAME=maze-nav2
 JOINCODE=fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/xxxxxxxxxxxxxxxxxxxxxxx
 ```
-If you chose a different name for your host than “laptop” you also have to change the name of peer address in a cyclonedds.xml file located in rosbot-demo-labyrinth/src/docker_sim directory (line 14).  
+If you chose a different name for your host than “laptop” you also have to change the name of peer address in a cyclonedds.xml file located in `rosbot-demo-labyrinth/src/docker_sim` directory (line 14).  
 ```
 <Peers>
 	<Peer address="maze-nav2-sim"/>
@@ -43,17 +43,17 @@ If you chose a different name for your host than “laptop” you also have to c
 </Peers>
 ```
 ## Launching Gazebo simulation 
-To launch simulation you have to go to the `docker_sim` folder, allow a docker container to connect to your display, and then simply run the docker-compose file. Open new terminal, go to workspace folder and type:
+To launch simulation you have to go to the `docker_sim` folder, allow a docker container to connect to your display, and then simply run the docker-compose file. Open new terminal and type:
 ```
-cd src/rosbot-demo-labyrinth/src/docker_sim
+cd ~/rosbot_ws/src/rosbot-demo-labyrinth/src/docker_sim
 xhost local:root
-docker-compose up --build
+sudo docker-compose up --build
 ```
 When you start demo for the first time docker container with navigation is not yet added to a husarnet network so it won't be able to communicate with itself. You need to restart it to make everything work fine. 
 
 To make the robot go through the labyrinth you have to call ROS service called “start” providing goal x and y position. 
 For simulation, maze exit is around x=10.0, y=8.0. Go to the first terminal where you set up a connection on the host machine and type:
 ```
-ros2 service call /start custom_interfaces/srv/Start "{x: 10.0, y: 8.0}"
+ros2 service call /start custom_interfaces/srv/Start "{x: 10.0, y: 8.5}"
 ```
 This service will update the map and send the goal position. Then nav2 will generate a path through the labyrinth and make the robot follow it. Generated path may have little zig-zags, but a local trajectory planner should make the robot drive smoothly.
