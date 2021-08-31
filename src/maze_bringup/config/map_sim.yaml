@@ -1,4 +1,4 @@
-image: maze_cam.png
+image: maze_cam_sim.png
 resolution: 0.041
 origin: [-1.6, -0.95, 0.0]
 negate: 0
