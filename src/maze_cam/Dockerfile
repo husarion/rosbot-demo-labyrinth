@@ -1,4 +1,4 @@
-ARG ROS_DISTRO=foxy
+ARG ROS_DISTRO=galactic
 FROM ros:$ROS_DISTRO-ros-base
 
 SHELL ["/bin/bash", "-c"]
@@ -11,7 +11,7 @@ RUN apt update && apt install -y \
 
 RUN apt upgrade -y 
 
-RUN apt install -y ros-$ROS_DISTRO-rmw-cyclonedds-cpp
+# RUN apt install -y ros-$ROS_DISTRO-rmw-cyclonedds-cpp
 RUN sudo rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /ros2_ws/src
