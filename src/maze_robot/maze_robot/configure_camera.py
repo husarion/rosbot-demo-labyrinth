@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import rclpy
-import cv_bridge
 import cv2
 import numpy as np
 import yaml
@@ -14,10 +13,8 @@ from ament_index_python.packages import get_package_share_directory
 
 # TODO Parameters for map scalig
 
-
 def empty_callback(x):
     pass
-
 
 class ConfigureCameraNode(Node):
     def __init__(self):
@@ -107,8 +104,9 @@ class ConfigureCameraNode(Node):
         if key == 27:
             exit()
 
-        cv2.imshow('camera view', con)
-        cv2.imshow('generated map', maze)
+        cv2.imshow('camera view', cv2.resize(con, (640, 480)))
+        # cv2.imshow('camera view', con)
+        cv2.imshow('generated map', cv2.resize(maze, (640, 480)))
 
         cv2.waitKey(10)
 

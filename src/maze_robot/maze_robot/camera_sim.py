@@ -1,33 +1,23 @@
 #!/usr/bin/env python3
-from os import truncate
+#from os import truncate
 from cv_bridge.core import CvBridge
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
-import cv_bridge
 from cv_bridge import CvBridgeError
 from functools import partial
 from nav2_msgs.srv import LoadMap
 from ament_index_python.packages import get_package_share_directory
 
 from custom_interfaces.srv import UpdateMap
-from custom_interfaces.srv import GetImage
 
 import cv2
 import numpy as np
-import time
 import os
 
 from threading import Event
 from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
-
-# TODO Parameters for map scaling
-
-
-def empty_callback():
-    pass
-
 
 class CameraNode(Node):
     def __init__(self):
@@ -47,15 +37,12 @@ class CameraNode(Node):
         self.bridge = CvBridge()
 
         self.save_map_url_ = os.path.join(
-            get_package_share_directory('maze_bringup'), 'config/maze_cam.png')
+            get_package_share_directory('maze_bringup'), 'config/maze_cam_sim.png')
         self.map_yaml_url_ = os.path.join(
             get_package_share_directory('maze_bringup'), 'config/map_sim.yaml')
 
-        self.height_ = 0
-        self.width_ = 0
-
         self.declare_parameter('camera_topic', 'camera_map/image_raw')
-        self.declare_parameter('lower_hsv', [80, 0, 173])
+        self.declare_parameter('lower_hsv', [83, 0, 173])
         self.declare_parameter('upper_hsv', [179, 255, 255])
 
         self.camera_topic_ = self.get_parameter('camera_topic').value
@@ -70,7 +57,6 @@ class CameraNode(Node):
         self.get_logger().info("Camera node has been started")
 
     # update map server
-
     def update_map_server(self, request, response):
         try:
             self.convert_map(self.cv_map_image_)

@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
-from os import truncate
 from cv_bridge.core import CvBridge
 import rclpy
 from rclpy.node import Node
-from sensor_msgs.msg import Image
-import cv_bridge
 from cv_bridge import CvBridgeError
 from functools import partial
 from nav2_msgs.srv import LoadMap
@@ -23,9 +20,6 @@ from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
 
 # TODO Parameters for map scaling
-
-def empty_callback():
-    pass
 
 class CameraNode(Node):
     def __init__(self):
@@ -79,7 +73,7 @@ class CameraNode(Node):
 
         mask = cv2.inRange(hsv_img, self.lower_hsv, self.upper_hsv)
         maze = cv2.bitwise_not(mask)
-        # maze = cv2.rotate(maze, cv2.ROTATE_180) #use if image flipped
+        #maze = cv2.rotate(maze, cv2.ROTATE_180) #use to flip image
 
         cv2.imwrite(self.save_map_url_, maze)
 
@@ -125,7 +119,6 @@ class CameraNode(Node):
         try:
             response = future.result()
             img = response.image
-            self.cv_map_image_ = self.bridge.imgmsg_to_cv2(img, "bgr8")
             try:
                 self.cv_map_image_ = self.bridge.imgmsg_to_cv2(img, "bgr8")
                 self.get_logger().info("Image from camera loaded!")
