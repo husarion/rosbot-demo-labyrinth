@@ -29,6 +29,7 @@ apt install ros-<ros-distro>-rmw-cyclonedds-cpp
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 export CYCLONEDDS_URI=file:///home/$USER/rosbot_ws/src/rosbot-demo-labyrinth/src/cyclonedds.xml
 ```
+If you don’t want to install ROS2 on your host machine you can use commands from inside a running container. It is described in the [Using ROS commands from inside container](#using-ros-commands-from-inside-container) section how to do it.
 ### Set up docker connection with husarnet
 Now you have to edit .env file located in `/rosbot-demo-labyrinth/src/docker_sim` folder by changing JOINCODE. 
 ```
@@ -57,3 +58,16 @@ For simulation, maze exit is around x=10.0, y=8.0. Go to the first terminal wher
 ros2 service call /start custom_interfaces/srv/Start "{x: 10.0, y: 8.5}"
 ```
 This service will update the map and send the goal position. Then nav2 will generate a path through the labyrinth and make the robot follow it. Generated path may have little zig-zags, but a local trajectory planner should make the robot drive smoothly.
+
+## Using ROS commands from inside container
+If you don’t want to install ROS2 on your host machine you can use commands from inside a running container. To do it type:
+```
+sudo docker container exec -it docker_navigation_maze_navigation_1 bash
+```
+Then inside container setup environment:
+```
+source /opt/ros/galactic/setup.bash
+source /ros2_ws/install/setup.bash
+export CYCLONEDDS_URI=file:///cyclonedds.xml
+```
+Now you can use ROS2 commands from inside the container. 
