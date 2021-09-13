@@ -32,7 +32,7 @@
         <pose>0 0 0 1.5707 0 1.5707</pose>
         <geometry>
           <mesh>
-            <uri>box.dae</uri>
+            <uri>model://maze_bringup/meshes/box.dae</uri>
             <scale>1 1 1</scale>
           </mesh>
         </geometry>
@@ -85,7 +85,7 @@
         <pose>0 0 0 1.5707 0 1.5707</pose>
         <geometry>
           <mesh>
-            <uri>upper.dae</uri>
+            <uri>model://maze_bringup/meshes/upper.dae</uri>
             <scale>1 1 1</scale>
           </mesh>
         </geometry>
@@ -153,7 +153,7 @@
         <pose>0 0 0 0 0 1.5707</pose>
         <geometry>
           <mesh>
-            <uri>wheel.dae</uri>
+            <uri>model://maze_bringup/meshes/wheel.dae</uri>
             <scale>1 1 1</scale>
           </mesh>
         </geometry>
@@ -216,7 +216,7 @@
         <pose>0 0 0 0 0 -1.5707</pose>
         <geometry>
           <mesh>
-            <uri>wheel.dae</uri>
+            <uri>model://maze_bringup/meshes/wheel.dae</uri>
             <scale>1 1 1</scale>
           </mesh>
         </geometry>
@@ -279,7 +279,7 @@
         <pose>0 0 0 0 0 1.5707</pose>
         <geometry>
           <mesh>
-            <uri>wheel.dae</uri>
+            <uri>model://maze_bringup/meshes/wheel.dae</uri>
             <scale>1 1 1</scale>
           </mesh>
         </geometry>
@@ -343,7 +343,7 @@
         <pose>0 0 0 0 0 -1.5707</pose>
         <geometry>
           <mesh>
-            <uri>wheel.dae</uri>
+            <uri>model://maze_bringup/meshes/wheel.dae</uri>
             <scale>1 1 1</scale>
           </mesh>
         </geometry>
@@ -462,7 +462,7 @@
         <pose>0 0 0 1.5707 0 1.5707</pose>
         <geometry>
           <mesh>
-            <uri>astra.dae</uri>
+            <uri>model://maze_bringup/meshes/astra.dae</uri>
             <scale>1 1 1</scale>
           </mesh>
         </geometry>
@@ -549,7 +549,7 @@
         <pose>0 0 0 1.5707 0 1.5707</pose>
         <geometry>
           <mesh>
-            <uri>rplidar.dae</uri>
+            <uri>model://maze_bringup/meshes/rplidar.dae</uri>
             <scale>1 1 1</scale>
           </mesh>
         </geometry>
