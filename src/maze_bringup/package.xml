@@ -14,5 +14,10 @@
 
   <export>
     <build_type>ament_cmake</build_type>
-  </export>
+    
+    <gazebo_ros                                                                 
+        gazebo_plugin_path="${prefix}/lib"
+        gazebo_model_path="${prefix}/.." /> 
+</export>
+
 </package>
