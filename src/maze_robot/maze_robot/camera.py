@@ -76,7 +76,7 @@ class CameraNode(Node):
 
         mask = cv2.inRange(hsv_img, self.lower_hsv, self.upper_hsv)
         maze = cv2.bitwise_not(mask)
-        maze = cv2.copyMakeBorder(maze,50,50,50,50,cv2.BORDER_CONSTANT,value=[255,255,255])
+        maze = cv2.copyMakeBorder(maze,15,15,15,15,cv2.BORDER_CONSTANT,value=[255,255,255])
         maze = cv2.rotate(maze, cv2.ROTATE_180) #comment to rotate image 180 deg
 
         cv2.imwrite(self.save_map_url_, maze)
