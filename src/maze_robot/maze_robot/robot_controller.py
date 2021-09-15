@@ -15,9 +15,6 @@ from threading import Event
 from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
 
-# TODO start response after map succesfully updated
-
-
 class RobotControllerNode(Node):
     def __init__(self):
         super().__init__("robot_controller")
@@ -43,6 +40,7 @@ class RobotControllerNode(Node):
         self.goal_x = request.x
         self.goal_y = request.y
 
+        time.sleep(1.0)
         if self.call_update_map():
 
             time.sleep(1.0)

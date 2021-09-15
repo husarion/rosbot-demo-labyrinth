@@ -104,9 +104,8 @@ class ConfigureCameraNode(Node):
         if key == 27:
             exit()
 
-        cv2.imshow('camera view', cv2.resize(con, (640, 480)))
-        # cv2.imshow('camera view', con)
-        cv2.imshow('generated map', cv2.resize(maze, (640, 480)))
+        cv2.imshow('camera view', cv2.resize(con, (640, 320)))
+        cv2.imshow('generated map', cv2.resize(maze, (640, 320)))
 
         cv2.waitKey(10)
 

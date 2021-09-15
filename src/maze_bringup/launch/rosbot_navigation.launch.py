@@ -1,10 +1,8 @@
 import os
-
-from launch import LaunchDescription
 import launch.actions
 import launch_ros.actions
+from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, SetEnvironmentVariable
-from ament_index_python.packages import get_package_prefix
 from ament_index_python.packages import get_package_share_directory
 from nav2_common.launch import RewrittenYaml
 
@@ -31,7 +29,7 @@ def generate_launch_description():
                        'planner_server',
                        'recoveries_server',
                        'bt_navigator',
-                       #'amcl',
+                       'amcl',
                        'map_server']
 
     configured_params = RewrittenYaml(

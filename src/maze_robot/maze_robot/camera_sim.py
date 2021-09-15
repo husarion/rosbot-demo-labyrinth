@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-#from os import truncate
 from cv_bridge.core import CvBridge
 import rclpy
 from rclpy.node import Node

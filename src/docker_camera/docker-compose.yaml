@@ -17,7 +17,6 @@ services:
       - bash
       - -c
       - |
-        export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
         export CYCLONEDDS_URI=file:///cyclonedds.xml
         ros2 launch maze_cam maze_cam.launch.py
 

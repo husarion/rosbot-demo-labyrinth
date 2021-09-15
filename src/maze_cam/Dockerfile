@@ -11,7 +11,6 @@ RUN apt update && apt install -y \
 
 RUN apt upgrade -y 
 
-# RUN apt install -y ros-$ROS_DISTRO-rmw-cyclonedds-cpp
 RUN sudo rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /ros2_ws/src

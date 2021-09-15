@@ -11,14 +11,9 @@ RUN apt update && apt install -y \
 RUN apt update && apt install -y \
     ros-$ROS_DISTRO-navigation2 \
     ros-$ROS_DISTRO-gazebo-ros-pkgs \
-    #ros-$ROS_DISTRO-rmw-cyclonedds-cpp \
     ros-$ROS_DISTRO-rviz2
 
 RUN apt upgrade -y 
-#RUN sudo rm -rf /var/lib/apt/lists/*
-
-RUN apt update && apt install -y \
-    ros-$ROS_DISTRO-nav2-bringup
 
 RUN mkdir -p /ros2_ws/src
 

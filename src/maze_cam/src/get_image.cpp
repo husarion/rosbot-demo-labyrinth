@@ -17,7 +17,7 @@ public:
 
         image_subscriber_ = this->create_subscription<sensor_msgs::msg::Image>(
             camera_topic_, 10, std::bind(&GetImageNode::callbackImageSub, this, _1));
-        image_publisher_ = this->create_publisher<sensor_msgs::msg::Image>("/camera/image_raw", 10);
+        image_publisher_ = this->create_publisher<sensor_msgs::msg::Image>("image", 10); ///camera/image_raw
         get_image_server_ = this->create_service<custom_interfaces::srv::GetImage>(
             "get_image",
             std::bind(&GetImageNode::callbackGetImage, this, _1, _2));
@@ -40,6 +40,7 @@ private:
     void callbackImageSub(const sensor_msgs::msg::Image::SharedPtr msg)
     {
         img = msg;
+        // republish image msg with lower frequency
         sleep(1.0);
         image.data = img->data;
         image.encoding = img->encoding;

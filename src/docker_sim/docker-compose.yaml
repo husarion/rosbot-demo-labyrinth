@@ -1,7 +1,7 @@
 version: "2.3"
 services:
 
-  # ROS foxy - maze navigation
+  # ROS galactic - maze navigation
   maze_navigation:
     build:
         context: ../
@@ -14,6 +14,7 @@ services:
     volumes: 
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./cyclonedds.xml:/cyclonedds.xml
+      - ../maze_bringup/config/nav2_params_sim.yaml:/ros2_ws/src/maze_bringup/config/nav2_params_sim.yaml #testing nav2 params
     network_mode: service:husarnet  # This will put the Husarnet Client in the same network namespace as your app (in this example: turtle_sim)
     command: 
       - bash
@@ -21,7 +22,6 @@ services:
       - |
         export CYCLONEDDS_URI=file:///cyclonedds.xml
         ros2 launch maze_bringup navigation_maze_sim.launch.py
-
 
   husarnet:
     image: husarnet/husarnet
