@@ -10,6 +10,8 @@ from ament_index_python.packages import get_package_share_directory
 from custom_interfaces.srv import UpdateMap
 from custom_interfaces.srv import GetImage
 
+from nav2_msgs.srv import ClearEntireCostmap
+
 import cv2
 import numpy as np
 import time
@@ -36,11 +38,11 @@ class CameraNode(Node):
         self.save_map_url_ = os.path.join(get_package_share_directory('maze_bringup'), 'config/maze_cam.png')
         self.map_yaml_url_ = os.path.join(get_package_share_directory('maze_bringup'), 'config/map.yaml')
 
-        self.declare_parameter('camera_topic','image_raw')
+        # self.declare_parameter('camera_topic','camera/image_raw')
         self.declare_parameter('lower_hsv',[80, 0, 173])
         self.declare_parameter('upper_hsv',[179, 255, 255])
 
-        self.camera_topic_ = self.get_parameter('camera_topic').value
+        # self.camera_topic_ = self.get_parameter('camera_topic').value
         self.lower_hsv = np.array(self.get_parameter('lower_hsv').value)
         self.upper_hsv = np.array(self.get_parameter('upper_hsv').value)
 
@@ -52,6 +54,7 @@ class CameraNode(Node):
     # update map server
     def update_map_server(self, request, response):
         try:
+            self.call_clear_entire_costmap()
             self.call_get_image()
             time.sleep(0.5)
             response.success = True
@@ -62,18 +65,19 @@ class CameraNode(Node):
         return response
 
     # camera image subscriber callback
-    def map_sub_callback(self, msg):
-        try:
-            self.cv_map_image_ = self.bridge.imgmsg_to_cv2(msg, "bgr8")
-        except CvBridgeError as e:
-            print(e)
+    # def map_sub_callback(self, msg):
+    #     try:
+    #         self.cv_map_image_ = self.bridge.imgmsg_to_cv2(msg, "bgr8")
+    #     except CvBridgeError as e:
+    #         print(e)
 
     def convert_map(self, img):
         hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
         mask = cv2.inRange(hsv_img, self.lower_hsv, self.upper_hsv)
         maze = cv2.bitwise_not(mask)
-        #maze = cv2.rotate(maze, cv2.ROTATE_180) #use to flip image
+        maze = cv2.copyMakeBorder(maze,50,50,50,50,cv2.BORDER_CONSTANT,value=[255,255,255])
+        maze = cv2.rotate(maze, cv2.ROTATE_180) #comment to rotate image 180 deg
 
         cv2.imwrite(self.save_map_url_, maze)
 
@@ -98,6 +102,25 @@ class CameraNode(Node):
         except Exception as e:
             self.get_logger().error("Service call failed %r" % (e,))
 
+    # clear entire costmap client
+    def call_clear_entire_costmap(self):
+        client = self.create_client(ClearEntireCostmap, "global_costmap/clear_entirely_global_costmap")
+        while not client.wait_for_service(1.0):
+            self.get_logger().warn("Waiting for clear entire map server...")
+
+        request = ClearEntireCostmap.Request()
+
+        future = client.call_async(request)
+        future.add_done_callback(
+            partial(self.callback_clear_entire_costmap))
+
+    def callback_clear_entire_costmap(self, future):
+        try:
+            response = future.result()
+            self.get_logger().info('Global costmap cleared')
+        except Exception as e:
+            self.get_logger().error("Service call failed %r" % (e,))
+
     # get image client
     def call_get_image(self):
         client = self.create_client(GetImage, "get_image",callback_group=self.callback_group)
@@ -113,7 +136,6 @@ class CameraNode(Node):
             partial(self.callback_get_image))
 
         self.future_done_event.wait()
-        
 
     def callback_get_image(self, future):
         try:
@@ -129,7 +151,7 @@ class CameraNode(Node):
                 print(e)
         except Exception as e:
             self.get_logger().error("Service call failed %r" % (e,))
-
+            
 
 def main(args=None):
     rclpy.init(args=args)
