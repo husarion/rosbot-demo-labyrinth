@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
 import rclpy
+import time
 from rclpy.node import Node
 from functools import partial
 from geometry_msgs.msg import PoseStamped
 from custom_interfaces.srv import Start
 from custom_interfaces.srv import UpdateMap
-
 from nav_msgs.msg import Path
-
-import time
 
 from threading import Event
 from rclpy.callback_groups import ReentrantCallbackGroup
@@ -21,8 +19,8 @@ class RobotControllerNode(Node):
         self.future_done_event = Event()
         self.callback_group = ReentrantCallbackGroup()
 
-        self.goal_x = 10.5
-        self.goal_y = 8.0
+        self.goal_x = 0.0
+        self.goal_y = 0.0
 
         self.path_ = Path()
 
