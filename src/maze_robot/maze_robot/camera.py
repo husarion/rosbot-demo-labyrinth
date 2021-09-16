@@ -132,7 +132,6 @@ class CameraNode(Node):
         try:
             response = future.result()
             img = response.image
-            print(str(response.width))
             try:
                 self.cv_map_image_ = self.bridge.imgmsg_to_cv2(img, "bgr8")
                 self.get_logger().info("Image from camera loaded!")
