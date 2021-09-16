@@ -111,7 +111,6 @@ class ConfigureCameraNode(Node):
 
         mask = cv2.inRange(hsv_img, self.lower_hsv, self.upper_hsv)
         maze = cv2.bitwise_not(mask)
-        # maze = cv2.rotate(maze, cv2.ROTATE_180) #use if image flipped
 
     # save HSV values to yaml file
     def save_hsv(self, lower_hsv, upper_hsv):

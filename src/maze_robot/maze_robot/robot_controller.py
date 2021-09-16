@@ -6,7 +6,6 @@ from geometry_msgs.msg import PoseStamped
 from custom_interfaces.srv import Start
 from custom_interfaces.srv import UpdateMap
 
-#from nav2_msgs.srv import LoadMap
 from nav_msgs.msg import Path
 
 import time

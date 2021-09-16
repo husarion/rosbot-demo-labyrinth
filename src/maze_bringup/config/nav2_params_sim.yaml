@@ -155,17 +155,17 @@ global_costmap:
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
-        # observation_sources: scan
-        # scan:
-        #   topic: /scan
-        #   max_obstacle_height: 2.0
-        #   clearing: True
-        #   marking: True
-        #   data_type: "LaserScan"
-        #   raytrace_max_range: 2.5
-        #   raytrace_min_range: 0.0
-        #   obstacle_max_range: 2.0
-        #   obstacle_min_range: 0.0
+        observation_sources: scan
+        scan:
+          topic: /scan
+          max_obstacle_height: 2.0
+          clearing: True
+          marking: True
+          data_type: "LaserScan"
+          raytrace_max_range: 2.5
+          raytrace_min_range: 0.0
+          obstacle_max_range: 2.0
+          obstacle_min_range: 0.0
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 7.0 
@@ -191,34 +191,9 @@ planner_server:
       allow_unknown: false                # allow traveling in unknown space
       max_iterations: -1                  # maximum total iterations to search for before failing (in case unreachable), set to -1 to disable
       max_on_approach_iterations: 1000    # maximum number of iterations to attempt to reach goal once in tolerance, 2D only
-      max_planning_time: 10.0
-      #max_planning_time_ms: 10000.0           # max time in s for planner to plan, smooth, and upsample. Will scale maximum smoothing and upsampling times based on remaining time after planning.
+      max_planning_time: 10.0             # max time in s for planner to plan, smooth, and upsample. Will scale maximum smoothing and upsampling times based on remaining time after planning.        
       motion_model_for_search: "VON_NEUMANN"    # valid options are MOORE, VON_NEUMANN, DUBIN, REEDS_SHEPP. 2D Moore, Von Neumann; Hybrid Dubin, Redds-Shepp; State Lattice set internally
       minimum_turning_radius: 0.4        # For Hybrid nodes: minimum turning radius in m of path / vehicle
-
-      # smoother:
-      #   smoother:
-      #     w_curve: 30.0                 # weight to minimize curvature of path
-      #     w_dist: 0.0                   # weight to bind path to original as optional replacement for cost weight
-      #     w_smooth: 30000.0 #30000.0             # weight to maximize smoothness of path
-      #     w_cost: 0.025 #0.025                 # weight to steer robot away from collision and cost
-      #     cost_scaling_factor: 10.0 #10.0     # this should match the inflation layer's parameter
-
-      #   # I do not recommend users mess with this unless they're doing production tuning
-      #   optimizer:
-      #     max_time: 0.10 #0.10                # maximum compute time for smoother
-      #     max_iterations: 500           # max iterations of smoother
-      #     debug_optimizer: false        # print debug info
-      #     gradient_tol: 1.0e-10
-      #     fn_tol: 1.0e-20
-      #     param_tol: 1.0e-15
-      #     advanced:
-      #       min_line_search_step_size: 1.0e-20
-      #       max_num_line_search_step_size_iterations: 50
-      #       line_search_sufficient_function_decrease: 1.0e-20
-      #       max_num_line_search_direction_restarts: 10
-      #       max_line_search_step_expansion: 50
-
 
 
 planner_server_rclcpp_node:

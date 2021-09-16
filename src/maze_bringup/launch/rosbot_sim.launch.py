@@ -7,7 +7,6 @@ from launch.actions import DeclareLaunchArgument
 
 def generate_launch_description():
     world_file_name =  'maze_sim.world'
-    #world_file_name =  'maze_test.world'
 
     use_sim_time = launch.substitutions.LaunchConfiguration('use_sim_time', default='true')
 
