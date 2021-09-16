@@ -12,8 +12,8 @@
             <Peers>
                 <Peer address="maze-nav2"/>
                 <Peer address="maze-nav2-sim"/>
-                <Peer address="laptop"/>
                 <Peer address="maze-camera"/>
+                <Peer address="master-rosbot"/>
             </Peers>
             <ParticipantIndex>auto</ParticipantIndex>
             <MaxAutoParticipantIndex>30</MaxAutoParticipantIndex>

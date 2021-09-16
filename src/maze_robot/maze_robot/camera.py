@@ -38,11 +38,9 @@ class CameraNode(Node):
         self.save_map_url_ = os.path.join(get_package_share_directory('maze_bringup'), 'config/maze_cam.png')
         self.map_yaml_url_ = os.path.join(get_package_share_directory('maze_bringup'), 'config/map.yaml')
 
-        # self.declare_parameter('camera_topic','camera/image_raw')
         self.declare_parameter('lower_hsv',[80, 0, 173])
         self.declare_parameter('upper_hsv',[179, 255, 255])
 
-        # self.camera_topic_ = self.get_parameter('camera_topic').value
         self.lower_hsv = np.array(self.get_parameter('lower_hsv').value)
         self.upper_hsv = np.array(self.get_parameter('upper_hsv').value)
 
@@ -63,13 +61,6 @@ class CameraNode(Node):
             self.get_logger().error("Failed to update map")
     
         return response
-
-    # camera image subscriber callback
-    # def map_sub_callback(self, msg):
-    #     try:
-    #         self.cv_map_image_ = self.bridge.imgmsg_to_cv2(msg, "bgr8")
-    #     except CvBridgeError as e:
-    #         print(e)
 
     def convert_map(self, img):
         hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -141,6 +132,7 @@ class CameraNode(Node):
         try:
             response = future.result()
             img = response.image
+            print(str(response.width))
             try:
                 self.cv_map_image_ = self.bridge.imgmsg_to_cv2(img, "bgr8")
                 self.get_logger().info("Image from camera loaded!")
