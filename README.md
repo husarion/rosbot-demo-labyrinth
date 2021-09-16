@@ -75,13 +75,13 @@ To launch ROSbot we only need one folder named `rosbot_bringup` from the project
 scp -r ~/rosbot_ws/src/rosbot-demo-labyrinth/rosbot_bringup/ husarion@<ROSBOT_IP>:~/path/to/workspace/rosbot_bringup/
 ```
 ### Setup camera
-In this project, I'm using Raspberry Pi with a USB camera connected to it. Alternatively, you can connect a USB camera to your computer if you have a USB cable long enough. The first thing to do is edit `.env` file in `rosbot-demo-labyrinth/camera_bringup`  directory by changing JOINCODE. If your camera is not `/dev/video0` then you also have to change that in `docker-compose.yaml` file in the same folder (line 12) and in `maze_cam/config/v4l2_camera_params.yaml`. 
+In this project, I'm using Raspberry Pi with a USB camera connected to it. Alternatively, you can connect a USB camera to your computer if you have a USB cable long enough. The first thing to do is edit `.env` file in `rosbot-demo-labyrinth/camera_bringup`  directory by changing JOINCODE. If your camera is not `/dev/video0` then you also have to change that in `docker-compose.yaml` file in the same folder (line 12) and in `rosbot-demo-labyrinth/src/maze_cam/config/v4l2_camera_params.yaml`. 
 
-We need to copy three folders from the project repository to launch the camera. Similar to ROSbot we can use `scp`. On the host machine terminal type:
+We need to copy three folders from the project repository to launch the camera. Similar to ROSbot we can use `scp`. Make sure that your raspberry workspace include src directory if not create it using `mkdir`. Then on the host machine terminal type:
 ```
 scp -r ~/rosbot_ws/src/rosbot-demo-labyrinth/camera_bringup/ pi@<raspberry_ip>:~/path/to/workspace/camera_bringup/
-scp -r ~/rosbot_ws/src/rosbot-demo-labyrinth/src/custom_interfaces/ pi@<raspberry_ip>:~/path/to/workspace/custom_interfaces/
-scp -r ~/rosbot_ws/src/rosbot-demo-labyrinth/src/maze_cam/ pi@<raspberry_ip>:~/path/to/workspace/maze_cam/
+scp -r ~/rosbot_ws/src/rosbot-demo-labyrinth/src/custom_interfaces/ pi@<raspberry_ip>:~/path/to/workspace/src/custom_interfaces/
+scp -r ~/rosbot_ws/src/rosbot-demo-labyrinth/src/maze_cam/ pi@<raspberry_ip>:~/path/to/workspace/src/maze_cam/
 ``` 
 ## Launch demo 
 To run the demo you simply have to lunch 3 docker-compose files and then call ROS service to start it.
