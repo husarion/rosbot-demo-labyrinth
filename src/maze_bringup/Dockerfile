@@ -26,7 +26,7 @@ WORKDIR /ros2_ws
 RUN source /opt/ros/$ROS_DISTRO/setup.bash && \
     colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --cmake-args -DBUILD_TESTING=OFF --merge-install
 
-COPY ./ros_entrypoint.sh /
+COPY ./maze_bringup/ros_entrypoint.sh /
 
 ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["bash"]

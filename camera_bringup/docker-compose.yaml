@@ -3,7 +3,7 @@ services:
 
   maze_camera:
     build:
-      context: ../
+      context: ../src
       dockerfile: ./maze_cam/Dockerfile
     tty: true
     environment: 

@@ -4,8 +4,8 @@ services:
   # ROS foxy - maze navigation
   maze_navigation:
     build:
-        context: ../
-        dockerfile: ./Dockerfile
+        context: ../src
+        dockerfile: ./maze_bringup/Dockerfile
     tty: true
     environment: 
       - DISPLAY=$DISPLAY
@@ -13,8 +13,8 @@ services:
     volumes: 
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./cyclonedds.xml:/cyclonedds.xml
-      - ../maze_bringup/config/nav2_params.yaml:/ros2_ws/src/maze_bringup/config/nav2_params.yaml #testing nav2 params
-      - ../maze_bringup/config/maze_cam.png:/ros2_ws/src/maze_bringup/config/maze_cam.png
+      - ../src/maze_bringup/config/nav2_params.yaml:/ros2_ws/src/maze_bringup/config/nav2_params.yaml #testing nav2 params
+      - ../src/maze_bringup/config/maze_cam.png:/ros2_ws/src/maze_bringup/config/maze_cam.png
     network_mode: service:husarnet  # This will put the Husarnet Client in the same network namespace as your app 
     command: 
       - bash
