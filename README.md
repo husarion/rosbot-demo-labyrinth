@@ -25,10 +25,10 @@ Create a workspace folder and copy the git repository using `git clone`.
 ```
 mkdir -p rosbot_ws/src
 cd rosbot_ws/src
-git clone --single-branch --branch galactic https://github.com/husarion/rosbot-demo-labyrinth.git
+git clone https://github.com/husarion/rosbot-demo-labyrinth.git
 ```
 #### Set up connection for navigation
-Edit .env file in `rosbot-demo-labyrinth/src/docker_navigation` directory by changing JOINCODE.
+Edit `.env` file in `rosbot-demo-labyrinth/src/docker_navigation` directory by changing JOINCODE.
 ```
 HOSTNAME=maze-nav2
 JOINCODE=fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/xxxxxxxxxxxxxxxxxxxxxxx

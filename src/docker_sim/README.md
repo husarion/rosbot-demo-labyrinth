@@ -4,7 +4,7 @@ Create a folder for your workspace and copy the git repository.
 ```
 mkdir -p rosbot_ws/src
 cd rosbot_ws/src
-git clone --single-branch --branch galactic https://github.com/husarion/rosbot-demo-labyrinth.git
+git clone https://github.com/husarion/rosbot-demo-labyrinth.git
 ```
 ## Set up husarnet communication
 In this project, husarnet is used to communicate between a docker container and the host machine. Husarnet allows to create a wirtual network interface on top of your operating system that allows your system to work over Internet. It is designed with ROS & ROS2 in mind and applies peer-to-peer comunication. Go to https://app.husarnet.com and create a free account or log in if you already have one. Then create a network using the “Create Network” button. Next click “Add element” and save the Join Code of your network. We will need it later.
