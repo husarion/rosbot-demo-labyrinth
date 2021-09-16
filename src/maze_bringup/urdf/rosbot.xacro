@@ -9,9 +9,9 @@
   <xacro:property name="cameraMass" value="0.1"/>
   <xacro:property name="namespace" value="$(arg robot_namespace)" />
 
-  <xacro:include filename="$(find rosbot_description)/urdf/rosbot.gazebo" />
-  <xacro:include filename="$(find rosbot_description)/urdf/materials.xacro" />
-  <xacro:include filename="$(find rosbot_description)/urdf/macros.xacro" />
+  <xacro:include filename="$(find maze_bringup)/urdf/rosbot.gazebo" />
+  <xacro:include filename="$(find maze_bringup)/urdf/materials.xacro" />
+  <xacro:include filename="$(find maze_bringup)/urdf/macros.xacro" />
 
   <link name="dummy"></link> 
   <joint name="dummy_joint" type="fixed">
@@ -43,7 +43,7 @@
     <visual name='base_link_visual'>
       <origin xyz="0 0 -0.02" rpy=" 1.5707 0 1.5707"/>
       <geometry>
-        <mesh filename="package://rosbot_description/meshes/box.dae" scale="0.001 0.001 0.001" />
+        <mesh filename="package://maze_bringup/meshes/box.dae" scale="0.001 0.001 0.001" />
       </geometry>
     </visual>
 
@@ -71,7 +71,7 @@
     <visual name='top'>
       <origin xyz="0 0 0.055" rpy=" 1.5707 0 1.5707"/>
       <geometry>
-        <mesh filename="package://rosbot_description/meshes/upper.dae" scale="0.001 0.001 0.001" />
+        <mesh filename="package://maze_bringup/meshes/upper.dae" scale="0.001 0.001 0.001" />
       </geometry>
     </visual>
   </link>
@@ -80,7 +80,7 @@
     <collision name="collision">
       <origin xyz="0 0 0" rpy="0 0 1.5707"/>
       <geometry>
-        <mesh filename="package://rosbot_description/meshes/wheel-v2.stl" scale="0.001 0.001 0.001" />
+        <mesh filename="package://maze_bringup/meshes/wheel-v2.stl" scale="0.001 0.001 0.001" />
       </geometry>
       <surface>
         <friction>
@@ -94,7 +94,7 @@
     <visual name="front_left_wheel_visual">
       <origin xyz="0 0 0" rpy="0 0 1.5707"/>
       <geometry>
-        <mesh filename="package://rosbot_description/meshes/wheel.dae" scale="0.001 0.001 0.001" />
+        <mesh filename="package://maze_bringup/meshes/wheel.dae" scale="0.001 0.001 0.001" />
       </geometry>
     </visual>
     <inertial>
@@ -111,7 +111,7 @@
     <collision name="collision">
       <origin xyz="0 0 0" rpy="0 0 -1.5707"/>
       <geometry>
-        <mesh filename="package://rosbot_description/meshes/wheel-v2.stl" scale="0.001 0.001 0.001" />
+        <mesh filename="package://maze_bringup/meshes/wheel-v2.stl" scale="0.001 0.001 0.001" />
       </geometry>
       <surface>
         <friction>
@@ -125,7 +125,7 @@
     <visual name="front_right_wheel_visual">
       <origin xyz="0 0 0" rpy="0 0 -1.5707"/>
       <geometry>
-        <mesh filename="package://rosbot_description/meshes/wheel.dae" scale="0.001 0.001 0.001" />
+        <mesh filename="package://maze_bringup/meshes/wheel.dae" scale="0.001 0.001 0.001" />
       </geometry>
     </visual>
     <inertial>
@@ -142,7 +142,7 @@
     <collision name="collision">
       <origin xyz="0 0 0" rpy="0 0 1.5707"/>
       <geometry>
-        <mesh filename="package://rosbot_description/meshes/wheel-v2.stl" scale="0.001 0.001 0.001" />
+        <mesh filename="package://maze_bringup/meshes/wheel-v2.stl" scale="0.001 0.001 0.001" />
       </geometry>
       <surface>
         <friction>
@@ -156,7 +156,7 @@
     <visual name="rear_left_wheel_visual">
       <origin xyz="0 0 0" rpy="0 0 1.5707"/>
       <geometry>
-        <mesh filename="package://rosbot_description/meshes/wheel.dae" scale="0.001 0.001 0.001" />
+        <mesh filename="package://maze_bringup/meshes/wheel.dae" scale="0.001 0.001 0.001" />
       </geometry>
     </visual>
     <inertial>
@@ -173,7 +173,7 @@
     <collision name="collision">
       <origin xyz="0 0 0" rpy="0 0 -1.5707"/>
       <geometry>
-        <mesh filename="package://rosbot_description/meshes/wheel-v2.stl" scale="0.001 0.001 0.001" />
+        <mesh filename="package://maze_bringup/meshes/wheel-v2.stl" scale="0.001 0.001 0.001" />
       </geometry>
       <surface>
         <friction>
@@ -187,7 +187,7 @@
     <visual name="rear_right_wheel_visual">
       <origin xyz="0 0 0" rpy="0 0 -1.5707"/>
       <geometry>
-        <mesh filename="package://rosbot_description/meshes/wheel.dae" scale="0.001 0.001 0.001" />
+        <mesh filename="package://maze_bringup/meshes/wheel.dae" scale="0.001 0.001 0.001" />
       </geometry>
     </visual>
     <inertial>
@@ -296,7 +296,7 @@
     <visual>
       <origin xyz="-0.01 0 -0.03" rpy="1.5707 0 1.5707"/>
       <geometry>
-        <mesh filename="package://rosbot_description/meshes/astra.dae" scale="0.001 0.001 0.001" />
+        <mesh filename="package://maze_bringup/meshes/astra.dae" scale="0.001 0.001 0.001" />
       </geometry>
     </visual>
 
@@ -337,14 +337,14 @@
     <collision>
       <origin xyz="0 0 0" rpy="1.5707 0 4.71"/>
       <geometry>
-        <mesh filename="package://rosbot_description/meshes/rplidar.dae" scale="0.001 0.001 0.001" />
+        <mesh filename="package://maze_bringup/meshes/rplidar.dae" scale="0.001 0.001 0.001" />
       </geometry>
     </collision>
 
     <visual>
       <origin xyz="0 0 0" rpy="1.5707 0 4.71"/>
       <geometry>
-        <mesh filename="package://rosbot_description/meshes/rplidar.dae" scale="0.001 0.001 0.001" />
+        <mesh filename="package://maze_bringup/meshes/rplidar.dae" scale="0.001 0.001 0.001" />
       </geometry>
     </visual>
 
