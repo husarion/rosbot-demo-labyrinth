@@ -28,7 +28,7 @@ cd rosbot_ws/src
 git clone https://github.com/husarion/rosbot-demo-labyrinth.git
 ```
 #### Set up connection for navigation
-Edit `.env` file in `rosbot-demo-labyrinth/src/docker_navigation` directory by changing JOINCODE.
+Edit `.env` file in `rosbot-demo-labyrinth/navigation_bringup` directory by changing JOINCODE.
 ```
 HOSTNAME=maze-nav2
 JOINCODE=fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/xxxxxxxxxxxxxxxxxxxxxxx
@@ -51,7 +51,7 @@ sudo husarnet join ${JOINCODE} ${HOSTNAME}
 I choose “laptop” as my hostname, if you do the same it will save you some steps.
 
 #### Set up connection on host machine
-If you choose a different name for your host than “laptop” you have to change the name of peer address in a cyclonedds.xml file located in `rosbot-demo-labyrinth/src/docker_navigation`. Simply change the name in line 13:
+If you choose a different name for your host than “laptop” you have to change the name of peer address in a cyclonedds.xml file located in `rosbot-demo-labyrinth/navigation_bringup`. Simply change the name in line 13:
 ```
 <Peer address="laptop"/>
 ```
@@ -59,7 +59,7 @@ To be able to communicate with docker containers from the host machine terminal 
 ```
 apt install ros-<ros-distro>-rmw-cyclonedds-cpp
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-export CYCLONEDDS_URI=file:///home/$USER/rosbot_ws/src/rosbot-demo-labyrinth/src/cyclonedds.xml
+export CYCLONEDDS_URI=file:///home/$USER/rosbot_ws/src/rosbot-demo-labyrinth/src/maze_bringup/cyclonedds.xml
 ``` 
 #### Building necessary packages
 To be able to call custom interfaces made for this project and use camera configuration node you need to build some packages first. In terminal type:
@@ -69,17 +69,17 @@ colcon build --packages-select custom_interfaces maze_robot
 ```
 
 ### Set up ROSbot
-The first thing to do is edit `.env` file in `rosbot-demo-labyrinth/src/docker_rosbot` directory by changing JOINCODE. 
-To launch ROSbot we only need one folder named `docker_rosbot` from the project. To copy it to ROSbot workspace you can use `scp`. On host machine type:
+The first thing to do is edit `.env` file in `rosbot-demo-labyrinth/rosbot_bringup` directory by changing JOINCODE. 
+To launch ROSbot we only need one folder named `rosbot_bringup` from the project. To copy it to ROSbot workspace you can use `scp`. On host machine type:
 ```
-scp -r ~/rosbot_ws/src/rosbot-demo-labyrinth/src/docker_rosbot/ husarion@<ROSBOT_IP>:~/path/to/workspace/docker_rosbot/
+scp -r ~/rosbot_ws/src/rosbot-demo-labyrinth/rosbot_bringup/ husarion@<ROSBOT_IP>:~/path/to/workspace/rosbot_bringup/
 ```
 ### Setup camera
-In this project, I'm using Raspberry Pi with a USB camera connected to it. Alternatively, you can connect a USB camera to your computer if you have a USB cable long enough. The first thing to do is edit `.env` file in `rosbot-demo-labyrinth/src/docker_camera`  directory by changing JOINCODE. If your camera is not `/dev/video0` then you also have to change that in `docker-compose.yaml` file in the same folder (line 12) and in `maze_cam/config/v4l2_camera_params.yaml`. 
+In this project, I'm using Raspberry Pi with a USB camera connected to it. Alternatively, you can connect a USB camera to your computer if you have a USB cable long enough. The first thing to do is edit `.env` file in `rosbot-demo-labyrinth/camera_bringup`  directory by changing JOINCODE. If your camera is not `/dev/video0` then you also have to change that in `docker-compose.yaml` file in the same folder (line 12) and in `maze_cam/config/v4l2_camera_params.yaml`. 
 
 We need to copy three folders from the project repository to launch the camera. Similar to ROSbot we can use `scp`. On the host machine terminal type:
 ```
-scp -r ~/rosbot_ws/src/rosbot-demo-labyrinth/src/docker_camera/ pi@<raspberry_ip>:~/path/to/workspace/docker_camera/
+scp -r ~/rosbot_ws/src/rosbot-demo-labyrinth/camera_bringup/ pi@<raspberry_ip>:~/path/to/workspace/camera_bringup/
 scp -r ~/rosbot_ws/src/rosbot-demo-labyrinth/src/custom_interfaces/ pi@<raspberry_ip>:~/path/to/workspace/custom_interfaces/
 scp -r ~/rosbot_ws/src/rosbot-demo-labyrinth/src/maze_cam/ pi@<raspberry_ip>:~/path/to/workspace/maze_cam/
 ``` 
@@ -90,7 +90,7 @@ When launching compose files for the first time building and pulling docker imag
 ### Launch camera
 Go to your raspberry workspace and then:
 ```
-cd docker_camera/
+cd camera_bringup/
 sudo docker-compose up
 ```
 When we start docker-compose for the camera for the first time container is not yet added to a Husarnet network so it won't be able to communicate with itself. We need to restart it to make everything work fine. 
@@ -115,13 +115,13 @@ The second very important parameter is a resolution which will affect how well y
 ### Launch ROSbot
 Go to your ROSbot workspace and then:
 ```
-cd docker_rosbot/
+cd rosbot_bringup/
 docker-compose up --build
 ```
 ### Launch navigation
 Go to your workspace and then:
 ```
-cd rosbot-demo-labyrinth/src/docker_navigation/
+cd rosbot-demo-labyrinth/navigation_bringup/
 xhost local:root
 sudo docker-compose up --build
 ```
@@ -144,7 +144,7 @@ This service will update the map and send the goal position. Then nav2 will gene
 ### Using ROS commands from inside container
 If you don’t want to install ROS2 on your host machine you can use commands from inside a running container. You can do it by using a container that is running navigation:
 ```
-sudo docker container exec -it docker_navigation_maze_navigation_1 bash
+sudo docker container exec -it navigation_bringup_maze_navigation_1 bash
 ```
 Then inside the container setup environment:
 ```
@@ -156,3 +156,5 @@ Now you can use ROS2 commands from inside the container.
 
 ## Using gazebo simulation
 There is also a possibility to run this demo in a gazebo simulation. It is  described how to do it here: [ROSbot demo labyrinth simulation in gazebo](https://github.com/husarion/rosbot-demo-labyrinth/tree/main/src/docker_sim#rosbot-demo-labyrinth-simulation-in-the-gazebo)
+
+[ROSbot demo labyrinth simulation in gazebo](./simulation_bringup/#rosbot-demo-labyrinth-simulation-in-the-gazebo)
