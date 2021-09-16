@@ -11,7 +11,7 @@ In this project, husarnet is used to communicate between a docker container and 
 ### Set up docker connection with husarnet
 Now you have to edit .env file located in `/rosbot-demo-labyrinth/src/docker_sim` folder by changing JOINCODE. 
 ```
-HOSTNAME=maze-nav2
+HOSTNAME=maze-nav2-sim
 JOINCODE=fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/xxxxxxxxxxxxxxxxxxxxxxx
 ```
 If you don’t want to install ROS2 on your host machine you can use commands from inside a running container. It is described in the [Using ROS commands from inside container](#using-ros-commands-from-inside-container) section how to do it. If you choose to call ROS2 command from container then you can skip rest of steps in this section.
@@ -57,7 +57,7 @@ sudo docker-compose up --build
 When you start demo for the first time docker container with navigation is not yet added to a husarnet network so it won't be able to communicate with itself. You need to restart it to make everything work fine. 
 
 To make the robot go through the labyrinth you have to call ROS service called “start” providing goal x and y position. 
-For simulation, maze exit is around x=10.0, y=8.0. Go to the first terminal where you set up a connection on the host machine and type:
+For simulation, maze exit is around x=10.0, y=8.5. Go to the first terminal where you set up a connection on the host machine and type:
 ```
 ros2 service call /start custom_interfaces/srv/Start "{x: 10.0, y: 8.5}"
 ```
