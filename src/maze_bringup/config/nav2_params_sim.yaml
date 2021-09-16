@@ -69,7 +69,7 @@ controller_server:
       min_lookahead_dist: 0.3
       max_lookahead_dist: 0.9
       lookahead_time: 1.0 
-      rotate_to_heading_angular_vel: 1.8
+      rotate_to_heading_angular_vel: 2.3
       transform_tolerance: 0.1
       use_velocity_scaled_lookahead_dist: true
       min_approach_linear_velocity: 0.05
@@ -80,7 +80,7 @@ controller_server:
       regulated_linear_scaling_min_radius: 0.9 
       regulated_linear_scaling_min_speed: 0.25 
       use_rotate_to_heading: true
-      rotate_to_heading_min_angle: 0.785
+      rotate_to_heading_min_angle: 1.05
       max_angular_accel: 3.2
       cost_scaling_dist: 0.3
       cost_scaling_gain: 1.0
