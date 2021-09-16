@@ -23,7 +23,6 @@ setup(
             "robot_controller = maze_robot.robot_controller:main",
             "camera = maze_robot.camera:main",
             "configure_camera = maze_robot.configure_camera:main",
-            "goal = maze_robot.goal:main",
             "camera_sim = maze_robot.camera_sim:main",
         ],
     },
