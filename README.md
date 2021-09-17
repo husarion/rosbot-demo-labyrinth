@@ -69,8 +69,8 @@ export CYCLONEDDS_URI=file:///home/$USER/rosbot_ws/src/rosbot-demo-labyrinth/src
 To be able to call custom interfaces made for this project and use camera configuration node you need to build some packages first. In terminal type:
 ```
 cd ~/rosbot_ws
-colcon build --packages-select custom_interfaces maze_robot
-source /rosbot_ws/install/setup.bash
+colcon build --packages-select custom_interfaces maze_robot maze_bringup
+source ~/rosbot_ws/install/setup.bash
 ```
 
 ### Set up ROSbot
@@ -82,7 +82,7 @@ scp -r ~/rosbot_ws/src/rosbot-demo-labyrinth/rosbot_bringup/ husarion@<ROSBOT_IP
 ### Setup camera
 In this project, I'm using Raspberry Pi with a USB camera connected to it. Alternatively, you can connect a USB camera to your computer if you have a USB cable long enough. The first thing to do is edit `.env` file in `rosbot-demo-labyrinth/camera_bringup`  directory by changing JOINCODE. If your camera is not `/dev/video0` then you also have to change that in `docker-compose.yaml` file in the same folder (line 12) and in `rosbot-demo-labyrinth/src/maze_cam/config/v4l2_camera_params.yaml`. 
 
-We need to copy three folders from the project repository to launch the camera. Similar to ROSbot we can use `scp`. Make sure that your raspberry workspace include src directory if not create it using `mkdir`. Then on the host machine terminal type:
+We need to copy three folders from the project repository to launch the camera. Similar to ROSbot we can use `scp`. Make sure that your raspberry workspace include `src` directory if not create it using `mkdir`. Then on the host machine terminal type:
 ```
 scp -r ~/rosbot_ws/src/rosbot-demo-labyrinth/camera_bringup/ pi@<raspberry_ip>:~/path/to/workspace/camera_bringup/
 scp -r ~/rosbot_ws/src/rosbot-demo-labyrinth/src/custom_interfaces/ pi@<raspberry_ip>:~/path/to/workspace/src/custom_interfaces/
@@ -124,9 +124,9 @@ cd rosbot_bringup/
 docker-compose up --build
 ```
 ### Launch navigation
-Go to your workspace and then:
+On host machine in new terminal:
 ```
-cd rosbot-demo-labyrinth/navigation_bringup/
+cd ~/rosbot_ws/src/rosbot-demo-labyrinth/navigation_bringup/
 xhost local:root
 sudo docker-compose up --build
 ```

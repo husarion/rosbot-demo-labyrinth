@@ -45,6 +45,7 @@ To be able to call custom interfaces made for this project you need to build som
 ```
 cd ~/rosbot_ws
 colcon build --packages-select custom_interfaces
+source ~/rosbot_ws/install/setup.bash
 ```
 
 ## Launching Gazebo simulation 
