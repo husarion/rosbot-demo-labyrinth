@@ -160,6 +160,4 @@ export CYCLONEDDS_URI=file:///cyclonedds.xml
 Now you can use ROS2 commands from inside the container. 
 
 ## Using gazebo simulation
-There is also a possibility to run this demo in a gazebo simulation. It is  described how to do it here: [ROSbot demo labyrinth simulation in gazebo](https://github.com/husarion/rosbot-demo-labyrinth/tree/main/src/docker_sim#rosbot-demo-labyrinth-simulation-in-the-gazebo)
-
-[ROSbot demo labyrinth simulation in gazebo](./simulation_bringup/#rosbot-demo-labyrinth-simulation-in-the-gazebo)
+There is also a possibility to run this demo in a gazebo simulation. It is  described how to do it here: [ROSbot demo labyrinth simulation in gazebo](./simulation_bringup/#rosbot-demo-labyrinth-simulation-in-the-gazebo)
