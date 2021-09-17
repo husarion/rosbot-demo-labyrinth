@@ -17,7 +17,10 @@ Few notes about making a labyrinth:
 - try to make labyrinth cover as much space in camera view as possible!
 
 ## Set up Husarnet communication
-In this project, Husarnet is used to communicate between docker containers and the host machine. Husarnet allows you to create a wirtual network interface on top of your operating system that allows your system to work over the Internet. It is designed with ROS & ROS2 in mind and applies peer-to-peer communication.
+In this project, Husarnet is used to communicate between docker containers and the host machine. Husarnet allows you to create a wirtual network interface on top of your operating system that allows your system to work over the Internet. It is designed with ROS & ROS2 in mind and applies peer-to-peer communication. Diagram below represents how devices communicate between each other.
+<p align="center">
+    <img src="docs/labyrinth_diagram.png"/>
+</p>
 Go to https://app.husarnet.com and create a free account or log in if you already have one. Then create a network using the “Create Network” button. Next click “Add element” and save the Join Code of your network. We will need it later.
 ### Set up the host machine
 #### Copy git repository
@@ -66,6 +69,7 @@ To be able to call custom interfaces made for this project and use camera config
 ```
 cd ~/rosbot_ws
 colcon build --packages-select custom_interfaces maze_robot
+source /rosbot_ws/install/setup.bash
 ```
 
 ### Set up ROSbot
