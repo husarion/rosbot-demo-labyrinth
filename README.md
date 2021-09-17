@@ -21,6 +21,7 @@ In this project, Husarnet is used to communicate between docker containers and t
 <p align="center">
     <img src="docs/labyrinth_diagram.png"/>
 </p>
+
 Go to https://app.husarnet.com and create a free account or log in if you already have one. Then create a network using the “Create Network” button. Next click “Add element” and save the Join Code of your network. We will need it later.
 ### Set up the host machine
 #### Copy git repository
