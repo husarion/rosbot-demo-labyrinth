@@ -1,6 +1,6 @@
 v4l2_camera_node:
   ros__parameters:
-    video_device: "/dev/video0"
+    # video_device: /dev/video0
     image_size: [420,240]
     pixel_format: "YUYV"
     output_encoding: "rgb8"
