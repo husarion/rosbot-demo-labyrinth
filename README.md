@@ -55,7 +55,7 @@ sudo husarnet join ${JOINCODE} ${HOSTNAME}
 I choose “laptop” as my hostname, if you do the same it will save you some steps.
 
 #### Set up connection on host machine
-If you choose a different name for your host than “laptop” you have to change the name of peer address in a cyclonedds.xml file located in `rosbot-demo-labyrinth/navigation_bringup`. Simply change the name in line 13:
+If you choose a different name for your host than “laptop” you have to change the name of peer address in a `cyclonedds.xml` file located in `rosbot-demo-labyrinth/navigation_bringup`. Simply change the name in line 13:
 ```
 <Peer address="laptop"/>
 ```
@@ -80,7 +80,13 @@ To launch ROSbot we only need one folder named `rosbot_bringup` from the project
 scp -r ~/rosbot_ws/src/rosbot-demo-labyrinth/rosbot_bringup/ husarion@<ROSBOT_IP>:~/path/to/workspace/rosbot_bringup/
 ```
 ### Setup camera
-In this project, I'm using Raspberry Pi with a USB camera connected to it. Alternatively, you can connect a USB camera to your computer if you have a USB cable long enough. The first thing to do is edit `.env` file in `rosbot-demo-labyrinth/camera_bringup`  directory by changing JOINCODE. If your camera is not `/dev/video0` then you also have to change that in `docker-compose.yaml` file in the same folder (line 12) and in `rosbot-demo-labyrinth/src/maze_cam/config/v4l2_camera_params.yaml`. 
+In this project, I'm using Raspberry Pi with a USB camera connected to it. Alternatively, you can connect a USB camera to your computer if you have a USB cable long enough. The first thing to do is edit `.env` file in `rosbot-demo-labyrinth/camera_bringup`  directory by changing JOINCODE. If your camera is not `/dev/video0` then you also have to change that.
+```
+HOSTNAME=maze-camera
+JOINCODE=fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/DBfNAFMNsMiUvpL2agcpPR
+VIDEO_DEVICE=/dev/video0
+ROS_DOMAIN_ID=10
+```
 
 We need to copy three folders from the project repository to launch the camera. Similar to ROSbot we can use `scp`. Make sure that your raspberry workspace include `src` directory if not create it using `mkdir`. Then on the host machine terminal type:
 ```
@@ -105,7 +111,7 @@ First, you need to adjust HSV values for the camera. There is a special node tha
 ```
 ros2 run maze_robot configure_camera
 ```
-Two windows should show up. One with sliders for upper and lover HSV values and a view from the camera with a mask. Use sliders to mask out everything except maze walls. Good lighting may help with this process. To learn more about the HSV colour model you can visit: https://programmingdesignsystems.com/color/color-models-and-color-spaces/ (Note that ranges for HSV values are different in python OpenCV than presented in this article). To save HSV values press the spacebar. The second window shows how the map will be saved with a current mask. 
+Two windows should show up. One with sliders for upper and lover HSV values and a view from the camera with a mask. Use sliders to mask out everything except maze walls. Good lighting may help with this process. To learn more about the HSV colour model you can visit: https://programmingdesignsystems.com/color/color-models-and-color-spaces/ (Note that ranges for HSV values are different in python OpenCV than presented in this article). To save HSV values press the spacebar. The second window shows how the map will be read with a current mask. 
 
 <p align="center">
     <img src="docs/HSV_values.png"/>
