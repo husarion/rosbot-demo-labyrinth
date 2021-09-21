@@ -8,8 +8,8 @@ You need to have few things to run this demo:
 - Labyrinth!
 
 Make sure that you have installed:
-- Docker and Docker-Compose for Linux both on your host machine and raspberry
-- ROS2 on your host machine
+- **Docker** and **docker-dompose** for Linux both on your PC and raspberry. You can install it from [docker](https://docs.docker.com/engine/install/ubuntu/) and [docker compose](https://docs.docker.com/compose/install/).
+- **ROS2** on your PC (if you don't want to install it on your computer there is a possibility to use ROS2 commands from inside the container, it is described later how to do it)
 
 Few notes about making a labyrinth:
 - distances between walls should be at least 0.5m
@@ -17,12 +17,12 @@ Few notes about making a labyrinth:
 - try to make labyrinth cover as much space in camera view as possible!
 
 ## Set up Husarnet communication
-In this project, Husarnet is used to communicate between docker containers and the host machine. Husarnet allows you to create a wirtual network interface on top of your operating system that allows your system to work over the Internet. It is designed with ROS & ROS2 in mind and applies peer-to-peer communication. Diagram below represents how devices communicate between each other.
+In this project, Husarnet is used to communicate between docker containers and the host machine. Husarnet allows you to create a virtual network interface on top of your operating system that allows your system to work over the Internet. It is designed with ROS & ROS2 in mind and applies peer-to-peer communication. The diagram below represents how devices communicate with each other.
 <p align="center">
     <img src="docs/labyrinth_diagram.png"/>
 </p>
 
-Go to https://app.husarnet.com and create a free account or log in if you already have one. Then create a network using the “Create Network” button. Next click “Add element” and save the Join Code of your network. We will need it later.
+Go to https://app.husarnet.com and create a free account or log in if you already have one. Then create a network using the **“Create Network”** button. Next click **“Add element”** and save the **Join Code** of your network. We will need it later.
 ### Set up the host machine
 #### Copy git repository
 Create a workspace folder and copy the git repository using `git clone`.
@@ -75,7 +75,11 @@ source ~/rosbot_ws/install/setup.bash
 
 ### Set up ROSbot
 The first thing to do is edit `.env` file in `rosbot-demo-labyrinth/rosbot_bringup` directory by changing JOINCODE. 
-To launch ROSbot we only need one folder named `rosbot_bringup` from the project. To copy it to ROSbot workspace you can use `scp`. On host machine type:
+```
+HOSTNAME=master-rosbot
+JOINCODE=fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/xxxxxxxxxxxxxxxxxxxxx
+```
+To launch ROSbot we only need one folder named `rosbot_bringup` from the project. To copy it to ROSbot workspace you can use `scp`. Turn on robot then on host machine type:
 ```
 scp -r ~/rosbot_ws/src/rosbot-demo-labyrinth/rosbot_bringup/ husarion@<ROSBOT_IP>:~/path/to/workspace/rosbot_bringup/
 ```
@@ -97,7 +101,8 @@ scp -r ~/rosbot_ws/src/rosbot-demo-labyrinth/src/maze_cam/ pi@<raspberry_ip>:~/p
 ## Launch demo 
 To run the demo you simply have to lunch 3 docker-compose files and then call ROS service to start it.
 When launching for the first time devices are not yet added to the Husarnet network so you have to do some dummy starts. Launch navigation and camera like showed below then shut them down. Next launch files in order below.
-When launching compose files for the first time building and pulling docker images may take a while.
+
+**NOTE** When launching compose files for the first time building and pulling docker images may take a while.
 ### Launch camera
 Go to your raspberry workspace and then:
 ```
@@ -121,7 +126,10 @@ Two windows should show up. One with sliders for upper and lover HSV values and 
 
 If you don’t want to install ROS2 on your host machine you can run this node from inside a running container. It is described in the [Using ROS commands from inside container](#using-ros-commands-from-inside-container) section how to do it.
 
-The second very important parameter is a resolution which will affect how well you can reflect distances of your maze. A good way to find resolution is to put 2 walls on the edges of the camera view and then measure the distance between them. Next, simply divide distance (in meters) by image width (in pixels). In my case, it was 3.49/420 = 0.828571429. Now you have to past your resolution in `map.yaml` file located in `rosbot-demo-labyrinth/src/maze_bringup/config` directory.
+The second very important parameter is a resolution which will affect how well you can reflect distances of your maze. A good way to find resolution is to put 2 walls on the edges of the camera view and then measure the distance between them. Next, simply divide distance (in meters) by image width (in pixels). In my case, it was 3.49/420 = 0.00828571429. Now you have to past your resolution in `map.yaml` file located in `rosbot-demo-labyrinth/src/maze_bringup/config` directory.
+``` 
+resolution: 0.00828571429
+```
 
 ### Launch ROSbot
 Go to your ROSbot workspace and then:
@@ -137,7 +145,7 @@ xhost local:root
 sudo docker-compose up --build
 ```
 When we start docker-compose for navigation for the first time container is not yet added to a Husarnet network so it won't be able to communicate with itself. We need to restart it to make everything work fine. 
-### Calling start service
+### Using a demo
 After a successful launch, you have to set the robot position (as default it is in the top right corner of the camera view). Go to the terminal where you set up a connection on the host machine. Then update map:
 ```
 ros2 service call /update_map custom_interfaces/srv/UpdateMap
@@ -150,7 +158,7 @@ To make a robot escape labyrinth you need to call `start` service providing exit
 ```
 ros2 service call /start custom_interfaces/srv/Start "{x: 3.3, y: 1.4}"
 ```
-This service will update the map and send the goal position. Then nav2 will generate a path through the labyrinth and make the robot follow it. The generated path may have little zig-zags, but a local trajectory planner should make the robot drive smoothly. You can move some walls and change starting position and call start service again.
+This service will update the map and send the goal position. Then nav2 will generate a path through the labyrinth and make the robot follow it. The generated path may have little zig-zags, but a local trajectory planner should make the robot drive smoothly. You can move some walls or change starting position and call `start` service again to test different escape paths.
 
 ### Using ROS commands from inside container
 If you don’t want to install ROS2 on your host machine you can use commands from inside a running container. You can do it by using a container that is running navigation:

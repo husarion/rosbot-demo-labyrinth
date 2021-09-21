@@ -1,4 +1,7 @@
 # Rosbot demo labyrinth simulation in the gazebo.
+Make sure that you have installed on your PC:
+- **Docker** and **docker-dompose** for Linux. You can install it from [docker](https://docs.docker.com/engine/install/ubuntu/) and [docker compose](https://docs.docker.com/compose/install/).
+- **ROS2** (if you don't want to install it on your computer there is a possibility to use ROS2 commands from inside the container, it is described later how to do it)
 ## Copy project git repository
 Create a folder for your workspace and copy the git repository. 
 ```
@@ -7,7 +10,7 @@ cd rosbot_ws/src
 git clone https://github.com/husarion/rosbot-demo-labyrinth.git
 ```
 ## Set up husarnet communication
-In this project, husarnet is used to communicate between a docker container and the host machine. Husarnet allows to create a wirtual network interface on top of your operating system that allows your system to work over Internet. It is designed with ROS & ROS2 in mind and applies peer-to-peer comunication. Go to https://app.husarnet.com and create a free account or log in if you already have one. Then create a network using the “Create Network” button. Next click “Add element” and save the Join Code of your network. We will need it later.
+In this project, husarnet is used to communicate between a docker container and the host machine. Husarnet allows creating a virtual network interface on top of your operating system that allows your system to work over the Internet. It is designed with ROS & ROS2 in mind and applies peer-to-peer communication. Go to https://app.husarnet.com and create a free account or log in if you already have one. Then create a network using the **“Create Network”** button. Next click **“Add element”** and save the **Join Code** of your network. We will need it later.
 ### Set up docker connection with husarnet
 Now you have to edit .env file located in `/rosbot-demo-labyrinth/src/docker_sim` folder by changing JOINCODE. 
 ```
@@ -62,14 +65,14 @@ For simulation, maze exit is around x=10.0, y=8.5. Go to the first terminal wher
 ```
 ros2 service call /start custom_interfaces/srv/Start "{x: 10.0, y: 8.5}"
 ```
-This service will update the map and send the goal position. Then nav2 will generate a path through the labyrinth and make the robot follow it. Generated path may have little zig-zags, but a local trajectory planner should make the robot drive smoothly.
+This service will update the map and send the goal position. Then nav2 will generate a path through the labyrinth and make the robot follow it. The generated path may have little zig-zags, but a local trajectory planner should make the robot drive smoothly.
 
 If you don’t want to install ROS2 on your host machine you can use commands from inside a running container. It is described in the [Using ROS commands from inside container](#using-ros-commands-from-inside-container) section how to do it.
 
 ## Using ROS commands from inside container
 If you don’t want to install ROS2 on your host machine you can use commands from inside a running container. You can do it by using container that is running simulation:
 ```
-sudo docker container exec -it docker_sim_maze_navigation_1 bash
+sudo docker container exec -it simulation_bringup_maze_navigation_1 bash
 ```
 Then inside container setup environment:
 ```
